@@ -1,2 +1,2 @@
 # DeCharity
-A Decentralized Charity platform where everyone can trust\
+A Decentralized Charity platform where everyone can trust
