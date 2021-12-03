@@ -8,7 +8,7 @@
 <h2>Installation Guide</h2>
 <p>1. Install MetaMask Wallet browser extension - https://metamask.io/<p>
 <p>2. Update to the latest npm version - npm install -g npm</p>
-<p>3. Update to the latest node version - nvm install --latest</p>
+<p>3. Update to the latest node version - npm install --latest</p>
 <p>4. Install all the dependencies - npm install</p>
 <p>5. [SKIP FOR NOW] Set up an Infura Rinkeby Testnet faucet, and replace it inside ethereum/contracts/deploy.js</p>
 <p>6. [SKIP FOR NOW] Contract address is currently stored at "ADDRESS.txt", replace your own address here</p>
