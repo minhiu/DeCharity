@@ -4,7 +4,7 @@ const compiledFactory = require('./build/CampaignFactory.json');
 
 const provider = new HDWalletProvider(
   'carbon mix grief layer betray sorry pupil trophy object humor surface session',
-  'https://rinkeby.infura.io/v3/d2f3f4b8e13e47709acd01912332789a'
+  'https://speedy-nodes-nyc.moralis.io/b9ed6f87e41b561c27824874/eth/rinkeby'
 );
 const web3 = new Web3(provider);
 
