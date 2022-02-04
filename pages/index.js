@@ -3,8 +3,12 @@ import factory from '../ethereum/factory';
 import { Card, Button } from 'semantic-ui-react';
 import Layout from '../components/Layout';
 import { Link } from '../routes';
+import { File } from '../components/UploadFile';
+import { Authentication } from '../components/Authentication';
+import { MoralisProvider } from "react-moralis";
 
 class CampaignIndex extends Component {
+  
   static async getInitialProps() {
     const campaigns = await factory.methods.getDeployedCampaigns().call();
     
@@ -29,7 +33,15 @@ class CampaignIndex extends Component {
 
   render() {
     return (
+      
       <Layout>
+        <MoralisProvider
+          appId="oiT6sgUAkVpbXNHatAuoB0r9dpwjK0qR5rfFVF4z"
+          serverUrl="https://v8fuoirhamw1.usemoralis.com:2053/server">
+          <Authentication></Authentication>
+          <File></File>
+        </MoralisProvider>
+        
         <div>
           <h3>Open Campaign</h3>
           <Link route="/campaigns/new">
