@@ -1,0 +1,16 @@
+{
+  "contracts": {
+    "Decha": "231168a9a1cd85588fa8c3d42127ae4c1b06bb71",
+    "OpenZeppelin/openzeppelin-contracts@4.0.0/ERC20": "232bd80ba89d0d5e45927ddcdb15ad97942b2df4"
+  },
+  "tests": {
+    "tests/unit_test.py": {
+      "coverage": false,
+      "isolated": false,
+      "results": ".........",
+      "sha1": "2a467f9b55d10f5e1c00bba760d9c62c0c06034c",
+      "txhash": []
+    }
+  },
+  "tx": {}
+}
