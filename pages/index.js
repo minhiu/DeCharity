@@ -39,6 +39,11 @@ class CampaignIndex extends Component {
           </Link>
           {this.renderCampaigns()}
         </div>
+        <div>
+          <div>
+            <Button floated="center" content = 'Show User Information' icon='add square'/>
+          </div>
+        </div>
       </Layout>
     );
   };
