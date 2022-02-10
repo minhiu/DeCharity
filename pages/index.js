@@ -40,7 +40,7 @@ class CampaignIndex extends Component {
           serverUrl="https://v8fuoirhamw1.usemoralis.com:2053/server">
           <Authentication></Authentication>
           <File></File>
-        </MoralisProvider>
+        
         
         <div>
           <h3>Open Campaign</h3>
@@ -50,7 +50,16 @@ class CampaignIndex extends Component {
             </a>
           </Link>
           {this.renderCampaigns()}
+        
+        <h3>View SelfCampaign</h3>
+          <Link route="/campaign_owner_view">
+            <a>
+              <Button floated="right" content='View Campaign' icon='magnify' primary />
+            </a>
+          </Link>
+          {this.renderCampaigns()}
         </div>
+        </MoralisProvider>
       </Layout>
     );
   };
