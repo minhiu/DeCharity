@@ -4,6 +4,8 @@ import { Card, Button } from 'semantic-ui-react';
 import Layout from '../components/Layout';
 import { Link } from '../routes';
 
+
+
 class CampaignIndex extends Component {
   static async getInitialProps() {
     const campaigns = await factory.methods.getDeployedCampaigns().call();
@@ -39,9 +41,12 @@ class CampaignIndex extends Component {
           </Link>
           {this.renderCampaigns()}
         </div>
+
         <div>
           <div>
-            <Button floated="center" content = 'Show User Information' icon='add square'/>
+            <Link route="userInformation">
+            <Button floated="center" content = 'Show User Information' icon='add square' primary/>
+            </Link>
           </div>
         </div>
       </Layout>
