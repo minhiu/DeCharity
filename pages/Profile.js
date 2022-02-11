@@ -1,14 +1,16 @@
-import React from 'react';
-import profileLogo from './profile-pic.png';
+import { Card, Button } from 'semantic-ui-react';
+import Layout from '../components/Layout';
+import { Link } from '../routes';
 
-function Profile() {
-    const userName = 'Justin';
-    return (
-        <>
-        <div>This is the user Profile Page.</div><div>{userName}</div>
-        </>
-        
-    );
-}
-
-export default Profile 
+export default()=>{
+    return(
+        <Layout>
+            <div>
+                <h1>This is the profile page</h1>
+            </div>
+            <div>
+                <img src={'./profile-pic.png'} />
+            </div>
+        </Layout>
+    )
+} 

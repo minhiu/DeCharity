@@ -1,5 +1,5 @@
 import React from "react";
-import { Menu } from "semantic-ui-react";
+import { Menu, Button } from "semantic-ui-react";
 import { Link } from '../routes';
 import {Profile} from '../pages/Profile';
 
@@ -16,8 +16,8 @@ export default () => {
         <Link route="/campaigns/new">
           <a className="item">+</a>  
         </Link>
-        <Link href="/Profile">
-          <a>Profile</a>
+        <Link route="Profile">
+            <Button floated="right" content = 'Profile' icon='add square' primary/>
         </Link>
       </Menu.Menu>
     </Menu> 
