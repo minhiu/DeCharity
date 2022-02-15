@@ -19,7 +19,6 @@ export default () => {
         <Link route="/campaigns/new">
           <a className="item">+</a>  
         </Link>
-        
       </Menu.Menu>
     </Menu> 
   );
