@@ -1,10 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import "./index.css";
-import * as serviceWorker from "./serviceWorker";
+// import "./index.css";
+// import * as serviceWorker from "./serviceWorker";
 import {BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import {
-    Navbar,
+    NavBar,
     Footer,
     Home,
     About,
@@ -22,7 +22,7 @@ ReactDOM.render(
         <Footer />
     </Router>
 
-    document.getElementById("root")
+    // document.getElementById("root")
 );
 
-serviceWorker.unregister();
+// serviceWorker.unregister();
