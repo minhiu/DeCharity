@@ -1,7 +1,7 @@
 import React from "react";
 import { ImageGroup } from "semantic-ui-react";
 
-function Home() {
+export default() => {
     return (
         <div className="home">
             <div class="container">

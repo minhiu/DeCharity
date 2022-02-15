@@ -1,6 +1,6 @@
 import React from "react";
 
-function Contact() {
+export default() => {
     return (
         <div className="contact">
             <div class="container">

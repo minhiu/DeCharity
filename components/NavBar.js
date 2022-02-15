@@ -1,7 +1,7 @@
 import React from 'react';
 import {NavLink} from "react-router-dom";
 
-function Navigation() {
+export default() => {
     return (
         <div className="navigation">
             <nav className="navbar navbar-expand navbar-dark bg-dark">
@@ -26,11 +26,11 @@ function Navigation() {
                                 <NavLink className="nav-link" to="/contact">
                                     Contact
                                 </NavLink>
-                                <li className="nav-item">
+                                {/* <li className="nav-item">
                                     <NavLink className="nav-link" to = "/blog">
                                         Blog
                                     </NavLink>
-                                </li>
+                                </li> */}
                             </li>
                         </u1>
                     </div>

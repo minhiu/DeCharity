@@ -1,6 +1,6 @@
 import React from "react";
 
-function About() {
+export default() => {
     return (
         <div className="about">
             <div class="containter">
