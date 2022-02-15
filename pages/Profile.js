@@ -1,6 +1,7 @@
 import { Divider, Form, Label } from 'semantic-ui-react';
 import Layout from '../components/Layout';
 import { Link } from '../routes';
+import Profile from '../components/Profile';
 
 
 export default()=>{
