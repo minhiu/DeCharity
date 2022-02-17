@@ -13,9 +13,13 @@ export default () => {
         <Link route="/">
           <a className="item">Campaigns</a>
         </Link>
+        <Link route="/Profile">
+          <a className="item">Profile</a>
+        </Link>
         <Link route="/campaigns/new">
           <a className="item">+</a>  
         </Link>
+        
       </Menu.Menu>
     </Menu> 
   );
