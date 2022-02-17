@@ -26,11 +26,11 @@ export default() => {
                                 <NavLink className="nav-link" to="/contact">
                                     Contact
                                 </NavLink>
-                                {/* <li className="nav-item">
+                                <li className="nav-item">
                                     <NavLink className="nav-link" to = "/blog">
                                         Blog
                                     </NavLink>
-                                </li> */}
+                                </li>
                             </li>
                         </u1>
                     </div>
@@ -38,4 +38,4 @@ export default() => {
             </nav>
         </div>
     );
-}
+};

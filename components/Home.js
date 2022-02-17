@@ -26,4 +26,4 @@ export default() => {
             </div>
         </div>
     );
-}
+};
