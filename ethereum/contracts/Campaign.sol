@@ -26,11 +26,19 @@ contract Campaign {
     Request[] public requests;
     address public manager;
     uint public minimumContribution;
+    mapping(address => bool) public contributors;
     mapping(address => bool) public approvers;
+    mapping(address => uint) public balances;
+    uint public contributorsCount;
     uint public approversCount;
 
     modifier restricted() {
         require(msg.sender == manager);
+        _;
+    }
+
+    modifier contributionCheck() {
+        require(balances[msg.sender] >= minimumContribution);
         _;
     }
 
@@ -40,10 +48,20 @@ contract Campaign {
     }
 
     function contribute() public payable {
-        require(msg.value > minimumContribution);
+        // require(msg.value > minimumContribution);
+        if (!contributors[msg.sender]) {
+            contributors[msg.sender] = true;
+            contributorsCount++;
+        }
 
-        approvers[msg.sender] = true;
-        approversCount++;
+        balances[msg.sender] += msg.value;
+    }
+
+    function becomeApprover() public contributionCheck {
+        if (!approvers[msg.sender]) {
+            approvers[msg.sender] = true;
+            approversCount += 1;
+        }
     }
 
     function createRequest(string description, uint value, address recipient) public restricted {

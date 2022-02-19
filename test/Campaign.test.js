@@ -51,6 +51,11 @@ describe('Campaigns', () => {
       value: '200'
     });
 
+    await campaign.methods.becomeApprover().send({
+      from: accounts[1],
+      gas: '1000000'
+    });
+
     const isContributor = await campaign.methods.approvers(accounts[1]).call();
     assert(isContributor);
   })
@@ -80,6 +85,11 @@ describe('Campaigns', () => {
     await campaign.methods.contribute().send({
       from: accounts[0],
       value: web3.utils.toWei('10', 'ether')
+    });
+
+    await campaign.methods.becomeApprover().send({
+      from: accounts[0],
+      gas: '1000000'
     });
 
     await campaign.methods
