@@ -5,6 +5,7 @@ import Layout from '../components/Layout';
 import { Link } from '../routes';
 import { File } from '../components/UploadFile';
 import { Authentication } from '../components/Authentication';
+import { SignUp }  from '../components/UserData';
 import { MoralisProvider } from "react-moralis";
 
 class CampaignIndex extends Component {
