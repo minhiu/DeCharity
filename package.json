@@ -10,7 +10,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@chakra-ui/react": "^1.8.5",
+    "@emotion/react": "^11.8.1",
+    "@emotion/styled": "^11.8.1",
     "@truffle/hdwallet-provider": "^1.7.0",
+    "framer-motion": "^6.2.7",
     "fs-extra": "^10.0.0",
     "ganache-cli": "^6.12.2",
     "magic-sdk": "^8.0.1",

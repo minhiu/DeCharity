@@ -1,14 +1,14 @@
 import react from "react";
 import { useMoralis } from "react-moralis";
 import { useState } from "react";
-import { Divider, Input } from "semantic-ui-react";
+import { Divider } from "semantic-ui-react";
+import { Button, Input, Alert, AlertIcon, Box, AlertTitle, AlertDescription, CloseButton } from '@chakra-ui/react'
 
 export const SignUp = () => {
     const { isAuthenticated, user , setUserData} = useMoralis();
 
     const [username, setUsername ] = useState();
     const [ email, setEmail ] = useState();
-    const [ password, setPassword ] = useState('');
     const [birthdate, setBirthdate ] = useState();
 
     const handleSave = () => {
@@ -16,13 +16,15 @@ export const SignUp = () => {
         username,
         email,
         birthdate,
-        password: password === "" ? undefined : password
       })
     } 
 
     if(isAuthenticated) {
       return (
         <div>
+          
+                <img src={require('../pages/profile-pic.png').default} height ={200} width={200} />
+            
           <text>Username  </text>
           <Input value={user.attributes.username} onChange={(event) => setUsername(event.currentTarget.value)}/>
           <Divider></Divider>
@@ -35,10 +37,8 @@ export const SignUp = () => {
           <text>EthAddress  </text>
           <Input value={user.attributes.ethAddress} />
           <Divider></Divider>
-          <text>Password</text>
-          <Input value={password} />
-          <Divider></Divider>
-          <button onClick={handleSave}>Submit Changes</button>
+         
+          <Button onClick={handleSave}>Submit Changes</Button>
         </div>
       );
     } else {
