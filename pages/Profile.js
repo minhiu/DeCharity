@@ -3,8 +3,10 @@ import Layout from '../components/Layout';
 import ProfilePic from './profile-pic.png';
 import { SignUp }  from '../components/UserData';
 import { MoralisProvider } from "react-moralis";
+import { useMoralis } from "react-moralis";
 
 export default()=>{
+
     return(
         <Layout>
            <MoralisProvider
