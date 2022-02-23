@@ -33,8 +33,9 @@ class CampaignIndex extends Component {
 
   render() {
     toast.info("Sample Info");
-    toast.success("Sample success");
+    toast.success("Sample Success");
     toast.error("Sample Error");
+    toast.warn("Sample warning");
     return (
       <Layout>
         <div>
