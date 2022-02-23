@@ -38,6 +38,12 @@ class CampaignIndex extends Component {
     toast.warn("Sample warning");
     return (
       <Layout>
+        <>
+        <ToastContainer
+          position="top-right"
+          autoClose={10000}
+          />
+        </>
         <div>
           <h3>Open Campaign</h3>
           <Link route="/campaigns/new">
@@ -47,9 +53,7 @@ class CampaignIndex extends Component {
           </Link>
           {this.renderCampaigns()}
         </div>
-        <>
-        <ToastContainer/>
-        </>
+        
       </Layout>
     );
   };
