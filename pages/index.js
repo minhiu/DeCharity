@@ -3,6 +3,8 @@ import factory from '../ethereum/factory';
 import { Card, Button } from 'semantic-ui-react';
 import Layout from '../components/Layout';
 import { Link } from '../routes';
+import { ToastContainer, toast} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 
@@ -30,6 +32,9 @@ class CampaignIndex extends Component {
   }
 
   render() {
+    toast.info("Sample Info");
+    toast.success("Sample success");
+    toast.error("Sample Error");
     return (
       <Layout>
         <div>
@@ -41,6 +46,9 @@ class CampaignIndex extends Component {
           </Link>
           {this.renderCampaigns()}
         </div>
+        <>
+        <ToastContainer/>
+        </>
       </Layout>
     );
   };
