@@ -1,9 +1,9 @@
 import React from "react";
 
-export default() => {
+export default function About() {
     return (
-        <div className="contact">
-            <div class="container">
+        <div className="about">
+            <div class="containter">
                 <div class="row align-items-center my-5">
                     <img
                         class="img-fluid rounded mb-4 mb-lg-0"
@@ -12,7 +12,7 @@ export default() => {
                     />
                 </div>
                 <div class="col-lg-5">
-                    <h1 class="font-weight-light">Contact</h1>
+                    <h1 class="font-weight-light">About</h1>
                     <p>
                         Lorem Ipsum is simply dummy text of the printing and typesetting
                         industry. Lorem Ipsum has been the industry's standard dummy text

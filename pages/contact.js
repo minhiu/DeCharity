@@ -1,18 +1,18 @@
 import React from "react";
 
-export default() => {
+export default function Contact() {
     return (
-        <div className="about">
-            <div class="containter">
+        <div className="contact">
+            <div class="container">
                 <div class="row align-items-center my-5">
                     <img
                         class="img-fluid rounded mb-4 mb-lg-0"
-                        src="http://placehold.it/900x400"
+                        src="/decharitylogo.png"
                         alt=""
                     />
                 </div>
                 <div class="col-lg-5">
-                    <h1 class="font-weight-light">About</h1>
+                    <h1 class="font-weight-light">Contact</h1>
                     <p>
                         Lorem Ipsum is simply dummy text of the printing and typesetting
                         industry. Lorem Ipsum has been the industry's standard dummy text

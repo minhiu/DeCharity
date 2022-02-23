@@ -1,35 +1,35 @@
 import React from 'react';
-import {NavLink} from "react-router-dom";
+import Link from 'next/link';
 
-export default() => {
+export default function NavBar() {
     return (
         <div className="navigation">
             <nav className="navbar navbar-expand navbar-dark bg-dark">
                 <div className="container">
-                    <NavLink className="navbar-brand" to="/">
+                    <Link className="navbar-brand" to="/">
                         DeCharity Homepage
-                    </NavLink>
+                    </Link>
                     <div>
                         <u1 className="navbar-nav ml-auto">
                             <li className="nav-item">
-                                <NavLink className="nav-link" to="/">
+                                <Link className="nav-link" to="/">
                                     Home
                                     <span className="sr-only">(current)</span>
-                                </NavLink>
+                                </Link>
                             </li>
                             <li className="nav-item">
-                                <NavLink className="nav-link" to = "/about">
+                                <Link className="nav-link" to = "/about">
                                     About
-                                </NavLink>
+                                </Link>
                             </li>
                             <li className="nav-item">
-                                <NavLink className="nav-link" to="/contact">
+                                <Link className="nav-link" to="/contact">
                                     Contact
-                                </NavLink>
+                                </Link>
                                 <li className="nav-item">
-                                    <NavLink className="nav-link" to = "/blog">
+                                    <Link className="nav-link" to = "/blog">
                                         Blog
-                                    </NavLink>
+                                    </Link>
                                 </li>
                             </li>
                         </u1>

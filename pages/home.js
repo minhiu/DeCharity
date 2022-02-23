@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import { Link } from '../../routes';
+import { Link } from '../routes';
 import ReactDOM from "react-dom";
 // import "./index.css";
 // import * as serviceWorker from "./serviceWorker";
@@ -12,11 +12,11 @@ import {BrowserRouter as Router, Route, Routes } from "react-router-dom";
 //     Contact as Contact
 // } from "../../components";
 
-import NavBar from '../../components/NavBar';
-import Footer from '../../components/Footer';
-import Home from '../../components/Home';
-import About from '../../components/About';
-import Contact from '../../components/Contact';
+import NavBar from '../components/NavBar';
+import Footer from '../components/Footer';
+import Home from '../components/Home';
+import About from '../components/About';
+import Contact from '../components/Contact';
 
 class Homepage extends Component {
     render() {
