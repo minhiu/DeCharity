@@ -4,6 +4,8 @@ import Layout from '../../components/Layout';
 import factory from '../../ethereum/factory';
 import web3 from '../../ethereum/web3';
 import { Router } from '../../routes';
+import useMoralis from 'react-moralis';
+const Moralis = require('moralis');
 
 class NewCampaign extends Component {
   state = {
@@ -22,12 +24,23 @@ class NewCampaign extends Component {
       const address = await factory.methods
         .createCampaign(this.state.minimumContribution)
         .send({ from: accounts[0] });
+      
+        const tempuser = await Moralis.User.current();
+        const Campaign = Moralis.Object.extend('Campaign');
+        const newCampaign = new Campaign();
+        newCampaign.set("owner",tempuser);
+        newCampaign.set("address",accounts[0]);
+        console.log(address);
+        newCampaign.set("name",address[0]);
+        newCampaign.save();  
         
       Router.pushRoute('/');
     } catch (err) {
       this.setState({ errorMessage: err.message });
     }
-
+    
+    
+    
     this.setState({ loading: false });
   };
 

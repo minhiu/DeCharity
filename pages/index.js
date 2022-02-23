@@ -43,6 +43,11 @@ class CampaignIndex extends Component {
         
         
         <div>
+        <Link route="/campaigns/owner/view">
+            <a>
+              <Button floated="right" content='View Campaign' icon='magnify' primary />
+            </a>
+          </Link>
           <h3>Open Campaign</h3>
           <Link route="/campaigns/new">
             <a>
@@ -50,15 +55,10 @@ class CampaignIndex extends Component {
             </a>
           </Link>
           {this.renderCampaigns()}
-        
-        <h3>View SelfCampaign</h3>
-          <Link route="/campaign_owner_view">
-            <a>
-              <Button floated="right" content='View Campaign' icon='magnify' primary />
-            </a>
-          </Link>
-          {this.renderCampaigns()}
+      
+          
         </div>
+        
         </MoralisProvider>
       </Layout>
     );
