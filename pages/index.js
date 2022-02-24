@@ -51,13 +51,8 @@ class CampaignIndex extends Component {
           </Link>
           {this.renderCampaigns()}
         
-        <h3>View SelfCampaign</h3>
-          <Link route="/campaign_owner_view">
-            <a>
-              <Button floated="right" content='View Campaign' icon='magnify' primary />
-            </a>
-          </Link>
-          {this.renderCampaigns()}
+        
+          
         </div>
         </MoralisProvider>
       </Layout>

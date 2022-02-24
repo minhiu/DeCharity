@@ -13,8 +13,6 @@ import CardCarousel from "../carousels/CardCarousel";
 export default () => {
     return(
         <Container>
-            <Header as="h1">Carousels</Header>
-            <Header as="h2">ImageCarousel</Header>
             <CardCarousel />
         </Container>
 

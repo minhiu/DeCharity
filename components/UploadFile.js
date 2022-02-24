@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Form, Input, Button, Message } from 'semantic-ui-react';
 import { useMoralis, useMoralisFile } from "react-moralis";
-export const File = () => {
+export const File = (setFileData) => {
     const [localFile, setLocalFile] = useState();
     
     const { error, isUploading, moralisFile, saveFile } = useMoralisFile();
@@ -11,6 +11,8 @@ export const File = () => {
       if (localFile) {
         let temp = await saveFile("upload.png", localFile);
         console.log(error);
+        console.log(setFileData);
+        setFileData(temp);
       }
     }
   

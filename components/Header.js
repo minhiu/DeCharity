@@ -1,5 +1,5 @@
 import React from "react";
-import { Menu } from "semantic-ui-react";
+import {Button, Menu } from "semantic-ui-react";
 import { Link } from '../routes';
 
 export default () => {
@@ -8,8 +8,13 @@ export default () => {
       <Link route="/">
         <a className="item">DeCharity</a>
       </Link>
-
+      
       <Menu.Menu position="right">
+        <Link route="/campaign_owner_view">
+            <a>
+              <Button content='View Campaign' icon='magnify' primary />
+            </a>
+        </Link>
         <Link route="/">
           <a className="item">Campaigns</a>
         </Link>

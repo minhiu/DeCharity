@@ -5,6 +5,7 @@ import React from "react";
 import CustomDotGroup from "../components/DotGroup";
 
 const CardCarousel = () => (
+   
   <CarouselProvider
     naturalSlideWidth={1}
     naturalSlideHeight={1}
@@ -12,13 +13,13 @@ const CardCarousel = () => (
   >
     <Slider>
       <Slide tag="a" index={0}>
-        <Image src="https://v8fuoirhamw1.usemoralis.com:2053/server/files/oiT6sgUAkVpbXNHatAuoB0r9dpwjK0qR5rfFVF4z/9c0fd0cdf9e23b8e1cfef6f2ec88ee5b_upload.png" />
+        <Image src="https://discountseries.com/wp-content/uploads/2017/09/default.jpg" />
       </Slide>
       <Slide tag="a" index={1}>
-        <Image src="https://lorempixel.com/800/800/cats/1" />
+        <Image src="" />
       </Slide>
       <Slide tag="a" index={2}>
-        <Image src="https://lorempixel.com/800/800/cats/2" />
+        <Image src="" />
       </Slide>
     </Slider>
 

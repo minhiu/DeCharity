@@ -4,14 +4,18 @@ import Layout from '../../components/Layout';
 import factory from '../../ethereum/factory';
 import web3 from '../../ethereum/web3';
 import { Router } from '../../routes';
+import { useMoralis} from "react-moralis";
 
 class NewCampaign extends Component {
   state = {
     minimumContribution: '',
     errorMessage: '',
-    loading: false
+    loading: false,
+    fileInfo: null,
   };
-
+  setFileInfo = (fileInfo) => {
+    this.setState({ fileInfo });
+  }
   onSubmit = async (event) => {
     event.preventDefault();
 
@@ -22,7 +26,12 @@ class NewCampaign extends Component {
       const address = await factory.methods
         .createCampaign(this.state.minimumContribution)
         .send({ from: accounts[0] });
-        
+      const Campaign = Moralis.Object.Extend('Campaign');
+      const thisCampaign = new Campaign();
+      thisCampaign.set('address', address);
+      const { authenticate, isAuthenticated, user } = useMoralis();
+      thisCampaign.set('userID', user.get("authData").get("id"));
+      thisCampaign.save();
       Router.pushRoute('/');
     } catch (err) {
       this.setState({ errorMessage: err.message });

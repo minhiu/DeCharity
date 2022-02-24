@@ -1,12 +1,20 @@
-import React, { Component} from "react";
+import React, { Component, useState} from "react";
 import Layout from "../../components/Layout";
 import Campaign from "../../ethereum/campaign";
-import { Card, Grid, Button } from 'semantic-ui-react';
+import { Container, Header, Card, Grid, Button } from 'semantic-ui-react';
 import web3 from "../../ethereum/web3";
 import ContributeForm from "../../components/ContributeForm";
 import { Link } from '../../routes';
+import CardCarousel from "../../carousels/CardCarousel";
+import { File } from '../../components/UploadFile';
+import { MoralisProvider } from "react-moralis";
 
 class CampaignShow extends Component {
+  constructor(props) {
+    super(props);
+    this.fileData = null;
+    this.setFileData = this.setFileData.bind(this);
+  }
   static async getInitialProps(props) {
     const address = props.query.address;
     const campaign = Campaign(address);
@@ -20,8 +28,10 @@ class CampaignShow extends Component {
       manager: summary[4]
     };
   }
+  
 
   renderCards() {
+    
     const {
       minimumContribution,
       balance,
@@ -64,8 +74,14 @@ class CampaignShow extends Component {
     ]
     return <Card.Group items={items} />
   }
-
+  setFileData(fileData) {
+    this.setState({
+      fileData: fileData
+    });
+  }
+  
   render() {
+    
     return (
       <Layout>
         <h3>Campaign Detail</h3>
@@ -91,7 +107,17 @@ class CampaignShow extends Component {
           </Grid.Row>
 
         </Grid>
+        <MoralisProvider
+          appId="oiT6sgUAkVpbXNHatAuoB0r9dpwjK0qR5rfFVF4z"
+          serverUrl="https://v8fuoirhamw1.usemoralis.com:2053/server">
+        <File setFileData={this.setFileData}></File>
+        <Container>
+          <CardCarousel img1={this.fileData ? this.fileData['_url']:"https://discountseries.com/wp-content/uploads/2017/09/default.jpg"} img2="https://discountseries.com/wp-content/uploads/2017/09/default.jpg" img3="https://discountseries.com/wp-content/uploads/2017/09/default.jpg"/>
+        </Container>
+        </MoralisProvider>
       </Layout>
+      
+      
     );
   };
 }
