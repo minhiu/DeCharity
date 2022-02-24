@@ -4,7 +4,12 @@ import Layout from '../../components/Layout';
 import factory from '../../ethereum/factory';
 import web3 from '../../ethereum/web3';
 import { Router } from '../../routes';
+<<<<<<< HEAD
 import { useMoralis} from "react-moralis";
+=======
+import useMoralis from 'react-moralis';
+const Moralis = require('moralis');
+>>>>>>> 96e5015b6fb98b040a64694217e32b79400bdd66
 
 class NewCampaign extends Component {
   state = {
@@ -26,17 +31,32 @@ class NewCampaign extends Component {
       const address = await factory.methods
         .createCampaign(this.state.minimumContribution)
         .send({ from: accounts[0] });
+<<<<<<< HEAD
       const Campaign = Moralis.Object.Extend('Campaign');
       const thisCampaign = new Campaign();
       thisCampaign.set('address', address);
       const { authenticate, isAuthenticated, user } = useMoralis();
       thisCampaign.set('userID', user.get("authData").get("id"));
       thisCampaign.save();
+=======
+      
+        const tempuser = await Moralis.User.current();
+        const Campaign = Moralis.Object.extend('Campaign');
+        const newCampaign = new Campaign();
+        newCampaign.set("owner",tempuser);
+        newCampaign.set("address",accounts[0]);
+        console.log(address);
+        newCampaign.set("name",address[0]);
+        newCampaign.save();  
+        
+>>>>>>> 96e5015b6fb98b040a64694217e32b79400bdd66
       Router.pushRoute('/');
     } catch (err) {
       this.setState({ errorMessage: err.message });
     }
-
+    
+    
+    
     this.setState({ loading: false });
   };
 

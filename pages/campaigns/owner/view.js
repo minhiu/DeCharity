@@ -7,7 +7,7 @@ import { Container, Header, Message, Segment } from "semantic-ui-react";
 // Don't forget to setyp required CSS!
 import "pure-react-carousel/dist/react-carousel.es.css";
 
-import CardCarousel from "../carousels/CardCarousel";
+import CardCarousel from "../../../carousels/CardCarousel";
 
 
 export default () => {
