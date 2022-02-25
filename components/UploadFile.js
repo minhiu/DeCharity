@@ -4,16 +4,16 @@ import { useMoralis, useMoralisFile } from "react-moralis";
 
 export const File = () => {
     const [localFile, setLocalFile] = useState();
-    
-    const { error, isUploading, moralisFile, saveFile } = useMoralisFile();
+    const [ profile_url, setProfileUrl] = useState();
+    const { error, isUploading, moralisFile, saveFile, setUserData} = useMoralisFile();
   
     const handleUpload = async (e) => {
       console.log("Uploading file...");
       if (localFile) {
-        let temp = await saveFile("upload.png", localFile);
-        console.log(error);
+        let temp = await saveFile("upload.jpeg", localFile);
+        console.log(temp);
       }
-    }
+    } 
   
     const handleChange = (event) => {
       if (event.currentTarget.files) {
