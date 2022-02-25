@@ -36,22 +36,26 @@ class CampaignIndex extends Component {
     toast.success("Sample Success");
     toast.error("Sample Error");
     toast.warn("Sample warning");
+    const notify = () => {toast("default notification")};
     return (
       <Layout>
         <>
         <ToastContainer
           position="top-right"
-          autoClose={10000}
+          autoClose={5000}
           />
         </>
         <div>
           <h3>Open Campaign</h3>
           <Link route="/campaigns/new">
             <a>
-              <Button floated="right" content='Create Campaign' icon='add circle' primary />
+              <Button onClick={notify} floated="right" content='Create Campaign' icon='add circle' primary />
             </a>
           </Link>
           {this.renderCampaigns()}
+        </div>
+        <div>
+          <button onClick={notify}>test notification</button>
         </div>
       </Layout>
     );

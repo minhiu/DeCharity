@@ -4,6 +4,8 @@ import Layout from '../../components/Layout';
 import factory from '../../ethereum/factory';
 import web3 from '../../ethereum/web3';
 import { Router } from '../../routes';
+import { ToastContainer, toast} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 class NewCampaign extends Component {
   state = {
@@ -30,10 +32,23 @@ class NewCampaign extends Component {
 
     this.setState({ loading: false });
   };
-
+/*
+  const notify = () => {
+    const campaignSuccess = () => {toast.success("Campaign successfully created.")};
+    const campaignFail = () => {toast.error("Campaign could not be created.")}
+  }
+*/
   render() {
+    const campaignSuccess = () => {toast.success("Campaign successfully created.")};
+    const campaignFail = () => {toast.error("Campaign could not be created.")}
     return (
       <Layout>
+        <>
+        <ToastContainer
+          position="top-right"
+          autoClose={5000}
+          />
+        </>
         <h3>Create a Campaign</h3>
         <Form onSubmit={this.onSubmit} error={!!this.state.errorMessage}>
           <Form.Field>
@@ -47,7 +62,7 @@ class NewCampaign extends Component {
           </Form.Field>
 
           <Message error header="Oops..." content={this.state.errorMessage} />
-          <Button type="submit" loading={this.state.loading} primary>Create</Button>
+          <Button onClick={campaignFail} type="submit" loading={this.state.loading} primary>Create</Button>
         </Form>
       </Layout>
     );
