@@ -169,13 +169,13 @@ contract Campaign {
         if (request.isApproved 
             && request.votedAddresses[msg.sender] 
             && request.approvedAddress[msg.sender] ) {
-                uint amount = 0; // TODO
-                _token.transfer(msg.sender, 50);
+                uint amount = 50;
+                _token.transfer(msg.sender, amount);
         } else if (!request.isApproved 
             && request.votedAddresses[msg.sender] 
             && !request.approvedAddress[msg.sender] )) {
-                uint amount = 0; // TODO
-                _token.transfer(msg.sender, 50);
+                uint amount = 50;
+                _token.transfer(msg.sender, amount);
             }
     }
 
