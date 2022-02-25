@@ -32,10 +32,7 @@ class CampaignIndex extends Component {
   }
 
   render() {
-    toast.info("Sample Info");
-    toast.success("Sample Success");
-    toast.error("Sample Error");
-    toast.warn("Sample warning");
+    toast("Welcome to DeCharity!");
     const notify = () => {toast("default notification")};
     return (
       <Layout>
