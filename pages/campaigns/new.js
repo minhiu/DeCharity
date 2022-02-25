@@ -32,21 +32,24 @@ class NewCampaign extends Component {
 
     this.setState({ loading: false });
   };
-/*
-  const notify = () => {
+
+  successNotify = () => {
     const campaignSuccess = () => {toast.success("Campaign successfully created.")};
-    const campaignFail = () => {toast.error("Campaign could not be created.")}
   }
-*/
+
+  failureNotify = () => {
+    const campaignFail = () => {toast.error("Campaign could not be created.")};
+  }
+
   render() {
     const campaignSuccess = () => {toast.success("Campaign successfully created.")};
-    const campaignFail = () => {toast.error("Campaign could not be created.")}
+    const campaignFail = () => {toast.error("Campaign could not be created.")};
     return (
       <Layout>
         <>
         <ToastContainer
           position="top-right"
-          autoClose={5000}
+          autoClose={4000}
           />
         </>
         <h3>Create a Campaign</h3>

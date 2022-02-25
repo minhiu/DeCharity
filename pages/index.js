@@ -39,14 +39,14 @@ class CampaignIndex extends Component {
         <>
         <ToastContainer
           position="top-right"
-          autoClose={5000}
+          autoClose={3000}
           />
         </>
         <div>
           <h3>Open Campaign</h3>
           <Link route="/campaigns/new">
             <a>
-              <Button onClick={notify} floated="right" content='Create Campaign' icon='add circle' primary />
+              <Button floated="right" content='Create Campaign' icon='add circle' primary />
             </a>
           </Link>
           {this.renderCampaigns()}
