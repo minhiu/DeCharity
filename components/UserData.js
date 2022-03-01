@@ -1,9 +1,8 @@
 import react from "react";
 import { useMoralis, useMoralisFile} from "react-moralis";
 import { useState } from "react";
-import { Form, Divider } from "semantic-ui-react";
-import { Button, Input, Image, Container, Alert, AlertIcon, Box, AlertTitle, AlertDescription, CloseButton } from '@chakra-ui/react'
-import { File } from '../components/UploadFile';
+import { Form, Divider , Input} from "semantic-ui-react";
+import { Button, Image, Container, Box } from '@chakra-ui/react'
 
 export const SignUp = () => {
     const { isAuthenticated, user, setUserData} = useMoralis();
@@ -13,8 +12,7 @@ export const SignUp = () => {
     const [ email, setEmail ] = useState();
     const [birthdate, setBirthdate ] = useState();
     const [ localFile, setLocalFile ] = useState();
-    const [ profile_url, setProfileUrl ] = useState();
-
+  
     const handleSave = () => {
       setUserData({
         username,
@@ -39,30 +37,45 @@ export const SignUp = () => {
       }
     }
 
+    
+
     if(isAuthenticated) {
       return (
         <div>
           <Box>
             <Image 
-            boxSize='200px'
-            
+            style={{width: 200, height: 200, borderRadius: 200/ 2}}
             src={user.attributes.profile_url} />
-        
+          
           </Box>
           <Form onSubmit={handleUpload} error={!!error}>
-            <Input type="file" onChange={handleChange} className="inputfile ui grey right floated button"/>
-            <Button type="submit" disabled={isUploading}>Upload</Button>
+            <Input type="file" onChange={handleChange} className="inputfile ui grey right floated button" style={{position: 'absolute', middle: 50, right: 0,top: -50}}/>
+            <Button type="submit" disabled={isUploading} style={{position: 'absolute', middle: 50, right: 0,top: -90}}>Upload</Button>
           </Form>
           
-          <p>Username  </p>
-          <Input value={user.attributes.username} onChange={(event) => setUsername(event.currentTarget.value)}/>
+          <p>Username</p>
+          <div class="ui fluid icon input">
+            <input 
+              placeholder={user.attributes.username} 
+              type="text" 
+              onChange={(event) => setUsername(event.currentTarget.value)}/></div>
           <Divider></Divider>
-          <p>Email  </p>
-          <Input value={user.attributes.email} onChange={(event) => setEmail(event.currentTarget.value)}/>
+
+          <p>Email</p>
+          <div class="ui fluid icon input">
+            <input 
+              placeholder={user.attributes.email} 
+              type="text" 
+              onChange={(event) => setEmail(event.currentTarget.value)}/></div>
           <Divider></Divider>
+
           <p>Birth Date  </p>
-          <Input value={user.attributes.birthdate} onChange={(event) => setBirthdate(event.currentTarget.value)}/>
+          <div class="ui fluid icon input">
+            <input placeholder={user.attributes.birthdate} 
+            type="text" 
+            onChange={(event) => setBirthdate(event.currentTarget.value)}/></div>
           <Divider></Divider>
+          
           <p>EthAddress  </p>
           <Container>
             value={user.attributes.ethAddress}
@@ -74,8 +87,8 @@ export const SignUp = () => {
       );
     } else {
       return (
-        <div>
-          Auth Error
+        <div >
+          Authentication has Failed
         </div>
       )
     }
