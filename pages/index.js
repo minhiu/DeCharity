@@ -33,7 +33,7 @@ class CampaignIndex extends Component {
 
   render() {
     toast("Welcome to DeCharity!");
-    const notify = () => {toast("default notification")};
+    const notify = () => {toast("test notification")};
     return (
       <Layout>
         <>

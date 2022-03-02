@@ -33,17 +33,14 @@ class NewCampaign extends Component {
     this.setState({ loading: false });
   };
 
-  successNotify = () => {
-    const campaignSuccess = () => {toast.success("Campaign successfully created.")};
-  }
-
-  failureNotify = () => {
-    const campaignFail = () => {toast.error("Campaign could not be created.")};
+  campaignNotify = async (event1) => {
+    event1.preventDefault();
+    const campaignSuccess = () => {toast.success("Campaign successfully created.")}
+    const campaignFail = () => {toast.error("Campaign could not be created.")}
+    return campaignSuccess
   }
 
   render() {
-    const campaignSuccess = () => {toast.success("Campaign successfully created.")};
-    const campaignFail = () => {toast.error("Campaign could not be created.")};
     return (
       <Layout>
         <>
@@ -65,7 +62,7 @@ class NewCampaign extends Component {
           </Form.Field>
 
           <Message error header="Oops..." content={this.state.errorMessage} />
-          <Button onClick={campaignFail} type="submit" loading={this.state.loading} primary>Create</Button>
+          <Button onClick={event1 => this.campaignNotify} type="submit" loading={this.state.loading} primary>Create</Button>
         </Form>
       </Layout>
     );
