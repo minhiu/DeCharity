@@ -13,9 +13,6 @@ export default () => {
         <Link route="/">
           <a className="item">Campaigns</a>
         </Link>
-        <Link route="/userInformation">
-          <a className="item">Profile</a>
-        </Link>
         <Link route="/campaigns/new">
           <a className="item">+</a>  
         </Link>
