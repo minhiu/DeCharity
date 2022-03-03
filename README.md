@@ -17,10 +17,12 @@
 <h4>Token Contract</h4>
 <p>1. Install brownie to compile, test, and deploy ERC tokens - pip install brownie</p>
 <p>2. Create a rinkeby testnet network using brownie and link it to Moralis Speedy Node</p>
-<p>3. Compile the erc-20 token contract - brownie console </p>
-<p>4. Deploy erc-20 token contract - brownie console --network "network-name"</p>
+<p>3. Compile the erc-20 token contract - brownie console (keep current directory as /ethereum/erc-20) </p>
+<p>4. Install OpenZeppelin Token Contract (IERC-20) - brownie pm install OpenZeppelin/openzeppelin-contracts@4.0.0
+<p>5. Deploy erc-20 token contract - brownie console --network "network-name"</p>
 <p>                                  account = accounts.load('account-name')</p>
 <p>                                  tokenContractName.deploy(initialSupply,{'from':account})</p>
+<p>                                  >>> Decha.deploy('1000000000000000000000000000', {'from': account});
 
 <h2>Folder Structure</h2>
 <p>1. Server:</p>

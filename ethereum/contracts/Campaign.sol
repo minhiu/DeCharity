@@ -6,10 +6,11 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 contract CampaignFactory {
     /** Keep all addresses of deployed Campaigns */
     address[] public deployedCampaigns;
+    IERC20 token = IERC20(0xa896B25da9d40F486C8917E184C3CB0d6B91adda);
 
     /** Create a new campaign */
     function createCampaign(uint minimum) public {
-        address newCampaign = new Campaign(minimum, msg.sender);
+        address newCampaign = new Campaign(minimum, msg.sender, token);
         deployedCampaigns.push(newCampaign);
     }
 
@@ -28,7 +29,7 @@ contract Campaign {
     IERC20 private _token;
 
     /** Transaction Event to emit to UI */
-    event Transaction(address from);
+    // event Transaction(address from);
 
     /** Request struct for each Campaign */
     struct Request {
@@ -67,7 +68,8 @@ contract Campaign {
 
     /** Modifier that requires a request expiration date passes */
     modifier requestExpirationDateCheck(uint index) {
-        require(request[index].expirationDate >= now);
+        require(now >= requests[index].expirationDate);
+        _;
     }
 
     /** Contract Constructor */
@@ -108,9 +110,10 @@ contract Campaign {
            value: value,
            recipient: recipient,
            completed: false,
-           result: false,
+           isApproved: false,
            approvalCount: 0,
-           expirationDate: now + 30 days,
+           totalVoteCount: 0,
+           expirationDate: (now + 30 days)
         });
 
         requests.push(newRequest);
@@ -122,7 +125,7 @@ contract Campaign {
 
         // Require user to be an approver and not yet voted
         require(approvers[msg.sender]);
-        require(!votedAddress[msg.sender]);
+        require(!request.votedAddresses[msg.sender]);
 
         request.votedAddresses[msg.sender] = true;
         request.approvedAddress[msg.sender] = true;
@@ -136,7 +139,7 @@ contract Campaign {
 
         // Require user to be an approver and not yet voted
         require(approvers[msg.sender]);
-        require(!votedAddress[msg.sender]);
+        require(!request.votedAddresses[msg.sender]);
 
         request.votedAddresses[msg.sender] = true;
         request.approvedAddress[msg.sender] = false;
@@ -166,15 +169,14 @@ contract Campaign {
       */
     function claimReward(uint index) public contributionCheck {
         Request storage request = requests[index];
+        uint amount = 50; // Needs an algorithm to determine the best amount to reward validators
         if (request.isApproved 
             && request.votedAddresses[msg.sender] 
             && request.approvedAddress[msg.sender] ) {
-                uint amount = 50;
                 _token.transfer(msg.sender, amount);
         } else if (!request.isApproved 
             && request.votedAddresses[msg.sender] 
-            && !request.approvedAddress[msg.sender] )) {
-                uint amount = 50;
+            && !request.approvedAddress[msg.sender] ) {
                 _token.transfer(msg.sender, amount);
             }
     }
