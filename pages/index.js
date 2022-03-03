@@ -51,9 +51,6 @@ class CampaignIndex extends Component {
           </Link>
           {this.renderCampaigns()}
         </div>
-        <div>
-          <button onClick={notify}>test notification</button>
-        </div>
       </Layout>
     );
   };
