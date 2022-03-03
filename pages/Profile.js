@@ -1,8 +1,6 @@
-import { Divider, Form, Label } from 'semantic-ui-react';
 import Layout from '../components/Layout';
 import { SignUp }  from '../components/UserData';
 import { MoralisProvider } from "react-moralis";
-import { useMoralis } from "react-moralis";
 import { ChakraProvider, extendTheme } from '@chakra-ui/react';
 
 export default()=>{
