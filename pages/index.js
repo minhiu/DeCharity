@@ -32,7 +32,7 @@ class CampaignIndex extends Component {
   }
 
   render() {
-    toast("Welcome to DeCharity!");
+    //toast("Welcome to DeCharity!");
     return (
       <Layout>
         <>
