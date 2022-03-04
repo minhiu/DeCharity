@@ -5,6 +5,8 @@ import { Card, Grid, Button } from 'semantic-ui-react';
 import web3 from "../../ethereum/web3";
 import ContributeForm from "../../components/ContributeForm";
 import { Link } from '../../routes';
+import { ToastContainer, toast} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 class CampaignShow extends Component {
   static async getInitialProps(props) {
@@ -68,6 +70,12 @@ class CampaignShow extends Component {
   render() {
     return (
       <Layout>
+        <>
+        <ToastContainer
+          position="top-right"
+          autoClose={3000}
+          />
+        </>
         <h3>Campaign Detail</h3>
         <Grid>
           <Grid.Row>
