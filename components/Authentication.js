@@ -1,19 +1,13 @@
 import React from "react";
-import { Box, Form, Input, Heading,Grid, Button, Message } from 'semantic-ui-react';
+import { Grid, Button } from 'semantic-ui-react';
 import { useMoralis } from "react-moralis";
-import { useState } from "react";
-
 
 export const Authentication = () => {
   const {
     authenticate,
-    user,
-    authError,
     isAuthenticated,
-    isAuthenticating,
     logout,
   } = useMoralis();
-
 
   return (
       <Grid>
@@ -22,7 +16,6 @@ export const Authentication = () => {
             <Button onClick={() => logout()}>Logout</Button> ) :
             (<Button onClick={() => authenticate()}>Authenticate</Button>)}
         </Grid.Row>
-        
       </Grid>
   );
 };

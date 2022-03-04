@@ -1,7 +1,6 @@
 import React from "react";
 import { Menu } from "semantic-ui-react";
 import { Link } from '../routes';
-import { MoralisProvider } from "react-moralis";
 
 export default () => {
   return (

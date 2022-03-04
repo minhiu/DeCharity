@@ -1,4 +1,3 @@
-import react from "react";
 import { useMoralis, useMoralisFile} from "react-moralis";
 import { useState } from "react";
 import { Form, Divider , Input} from "semantic-ui-react";

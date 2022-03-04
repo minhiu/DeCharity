@@ -1,10 +1,9 @@
 import Layout from '../components/Layout';
 import { SignUp }  from '../components/UserData';
 import { MoralisProvider } from "react-moralis";
-import { ChakraProvider, extendTheme } from '@chakra-ui/react';
+import { ChakraProvider } from '@chakra-ui/react';
 
 export default()=>{
-
     return(
         <Layout>
            <MoralisProvider
@@ -15,6 +14,5 @@ export default()=>{
             </ChakraProvider>
             </MoralisProvider>
         </Layout>
-
     )
 } 
