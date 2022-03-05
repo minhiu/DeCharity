@@ -3,6 +3,7 @@ import { useMoralis, useMoralisFile} from "react-moralis";
 import { useState } from "react";
 import { Form, Divider , Input} from "semantic-ui-react";
 import { Button, Image, Box } from '@chakra-ui/react'
+import { Authentication } from './../../../components/Authentication';
 
 
 export const ShowCampaigns = () => {
@@ -68,6 +69,7 @@ export const ShowCampaigns = () => {
         return (
           <div >
             Authentication has Failed
+            <Authentication></Authentication>
           </div>
         )
       }
