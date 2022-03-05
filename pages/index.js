@@ -45,9 +45,9 @@ class CampaignIndex extends Component {
         </>
         <div>
           <h3>Open Campaign</h3>
-          <Link route="/campaigns/new">
+          <Link route="/campaigns/donatedcampaigns/CampaignsIndex">
             <a>
-              <Button floated="right" content='Create Campaign' icon='add circle' primary />
+              <Button floated="right" content='View Donated Campaigns' primary />
             </a>
           </Link>
             <h3>Open Campaign</h3>
