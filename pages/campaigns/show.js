@@ -5,9 +5,8 @@ import { Container, Header, Card, Grid, Button } from 'semantic-ui-react';
 import web3 from "../../ethereum/web3";
 import ContributeForm from "../../components/ContributeForm";
 import { Link } from '../../routes';
-import CardCarousel from "../../carousels/CardCarousel";
-import { File } from '../../components/UploadFile';
-import { MoralisProvider } from "react-moralis";
+import { ToastContainer, toast} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 class CampaignShow extends Component {
   constructor(props) {
@@ -84,6 +83,12 @@ class CampaignShow extends Component {
     
     return (
       <Layout>
+        <>
+        <ToastContainer
+          position="top-right"
+          autoClose={3000}
+          />
+        </>
         <h3>Campaign Detail</h3>
         <Grid>
           <Grid.Row>

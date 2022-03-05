@@ -3,9 +3,10 @@ import factory from '../ethereum/factory';
 import { Card, Button } from 'semantic-ui-react';
 import Layout from '../components/Layout';
 import { Link } from '../routes';
-import { File } from '../components/UploadFile';
-import { Authentication } from '../components/Authentication';
-import { MoralisProvider } from "react-moralis";
+import { ToastContainer, toast} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+
 
 class CampaignIndex extends Component {
   
@@ -32,20 +33,22 @@ class CampaignIndex extends Component {
   }
 
   render() {
+    //toast("Welcome to DeCharity!");
     return (
       
       <Layout>
-        <MoralisProvider
-          appId="oiT6sgUAkVpbXNHatAuoB0r9dpwjK0qR5rfFVF4z"
-          serverUrl="https://v8fuoirhamw1.usemoralis.com:2053/server"
-          >
-          <Authentication />
-          <File />
-          <div>
-          <Link route="/campaigns/donatedcampaigns/CampaignsIndex">
-              <a>
-                <Button floated="right" content='View Donated Campaigns' icon='' primary />
-              </a>
+        <>
+        <ToastContainer
+          position="top-right"
+          autoClose={3000}
+          />
+        </>
+        <div>
+          <h3>Open Campaign</h3>
+          <Link route="/campaigns/new">
+            <a>
+              <Button floated="right" content='Create Campaign' icon='add circle' primary />
+            </a>
           </Link>
             <h3>Open Campaign</h3>
             <Link route="/campaigns/new">
@@ -57,7 +60,6 @@ class CampaignIndex extends Component {
         
             
           </div>
-        </MoralisProvider>
       </Layout>
     );
   };
