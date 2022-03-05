@@ -37,34 +37,26 @@ class CampaignIndex extends Component {
       <Layout>
         <MoralisProvider
           appId="oiT6sgUAkVpbXNHatAuoB0r9dpwjK0qR5rfFVF4z"
-          serverUrl="https://v8fuoirhamw1.usemoralis.com:2053/server">
-          <Authentication></Authentication>
-          <File></File>
-        
-        
-        <div>
-        <Link route="/campaigns/owner/view">
-            <a>
-              <Button floated="right" content='View Campaign' icon='magnify' primary />
-            </a>
+          serverUrl="https://v8fuoirhamw1.usemoralis.com:2053/server"
+          >
+          <Authentication />
+          <File />
+          <div>
+          <Link route="/campaigns/donatedcampaigns/CampaignsIndex">
+              <a>
+                <Button floated="right" content='View Donated Campaigns' icon='' primary />
+              </a>
           </Link>
-<<<<<<< HEAD
-          {this.renderCampaigns()}
+            <h3>Open Campaign</h3>
+            <Link route="/campaigns/new">
+              <a>
+                <Button floated="right" content='Create Campaign' icon='add circle' primary />
+              </a>
+            </Link>
+            {this.renderCampaigns()}
         
-        
-=======
-          <h3>Open Campaign</h3>
-          <Link route="/campaigns/new">
-            <a>
-              <Button floated="right" content='Create Campaign' icon='add circle' primary />
-            </a>
-          </Link>
-          {this.renderCampaigns()}
-      
->>>>>>> 96e5015b6fb98b040a64694217e32b79400bdd66
-          
-        </div>
-        
+            
+          </div>
         </MoralisProvider>
       </Layout>
     );

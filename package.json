@@ -11,6 +11,8 @@
   "license": "ISC",
   "dependencies": {
     "@truffle/hdwallet-provider": "^1.7.0",
+    "chakra": "^0.0.3",
+    "@chakra-ui/react": "^1.8.5",
     "fs-extra": "^10.0.0",
     "ganache-cli": "^6.12.2",
     "magic-sdk": "^8.0.1",
