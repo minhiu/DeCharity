@@ -3,6 +3,7 @@ import { SignUp }  from '../components/UserData';
 import { MoralisProvider } from "react-moralis";
 import { ChakraProvider } from '@chakra-ui/react';
 
+
 export default()=>{
     return(
         <Layout>
