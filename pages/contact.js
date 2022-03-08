@@ -1,5 +1,6 @@
 import React from "react";
 import Layout from "../components/Layout"
+import logo from "./decharitylogo.png"
 
 export default function Contact() {
     return (
@@ -9,8 +10,8 @@ export default function Contact() {
                     <div className="row align-items-center my-5">
                         <img
                             class="img-fluid rounded mb-4 mb-lg-0"
-                            src="decharitylogo.png"
-                            alt=""
+                            src={logo}
+                            alt="logo"
                         />
                     </div>
                     <div className="col-lg-5">
