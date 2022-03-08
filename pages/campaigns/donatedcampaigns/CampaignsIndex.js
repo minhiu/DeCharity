@@ -1,8 +1,11 @@
 import React from 'react';
 import { MoralisProvider } from 'react-moralis';
 import {ChakraProvider} from "@chakra-ui/react";
-import { ShowCampaigns } from './AllUserCampaigns';
+import {ShowCampaigns} from './AllUserCampaigns';
 import HardCodeDataEntry from '../../../components/HardCodeDataEntry';
+import { useMoralis } from 'react-moralis';
+
+import CampPage from './TestCampaigns';
 
 export default () => {
   return(
@@ -13,7 +16,7 @@ export default () => {
           >
         <ChakraProvider>
           <HardCodeDataEntry />
-          <ShowCampaigns />
+          <CampPage  />
         </ChakraProvider> 
     </MoralisProvider>
   

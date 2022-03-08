@@ -1,70 +1,81 @@
 
 import { useMoralis, useMoralisFile} from "react-moralis";
-import { useState } from "react";
-import { Form, Divider , Input} from "semantic-ui-react";
-import { Button, Image, Box } from '@chakra-ui/react'
+import { useState, useEffect } from "react";
+import { Icon, Card, Button } from 'semantic-ui-react';
 import { Authentication } from './../../../components/Authentication';
+const Moralis = require('moralis');
 
 
 export const ShowCampaigns = () => {
     const { isAuthenticated, user, setUserData} = useMoralis();
-    const { error, isUploading, saveFile} = useMoralisFile();
-
-    const [ username, setUsername ] = useState();
-    const [ email, setEmail ] = useState();
-    const [ birthdate, setBirthdate ] = useState();
-    const [ localFile, setLocalFile ] = useState();
-
-
-    if(isAuthenticated) {
+    const [campaigns, setCampaigns] = useState(null);
+    const [results, setResults] = useState(null);
+    useEffect(() => {
+        usercampaigns();
+      }, [])
+    const usercampaigns =  async function(){
+      try{
+        const DonatedCampaign = Moralis.Object.extend('DonatedCampaign');
+        const Campaign = Moralis.Object.extend('Campaign');
+        
+        const camps = new Moralis.Query(DonatedCampaign);
+        camps.equalTo('donor', user);
+        const temp = await camps.find();
+        // console.log(results[0].get('campaign'));
+        // console.log(JSON.stringify(results));
+        if (window !== undefined) {
+            setCampaigns(temp);
+        }
+        console.log(campaigns)
+      }catch (err){
+        console.log(err);
+      }
+      
+    }
+    const renderCampaign = (campaign) => {
+      
+      const Campaign = Moralis.Object.extend('Campaign');
+      const camp = new Moralis.Query(Campaign);
+      camp.equalTo('objectId', campaign.get('campaign'));
+      setResults(camp.find())
+      // console.log(campaign.get('campaign'));
+      console.log(JSON.stringify(result));
+      console.log("test");
+      result = result.then(() => {
+        if (result.length > 0) {
+          return <Div> No Matches</Div>;
+        }
+        // console.log(campaign.get('name'));
         return (
-          
-          <div>
-            <Box>
-              <Image 
-              style={{width: 200, height: 200, borderRadius: 200/ 2}}
-              src={user.attributes.profile_url} />
-            </Box>
-  
-            <Form onSubmit={console.log()} error={!!error}>
-              <Input type="file" onChange={console.log()} className="inputfile ui grey right floated button" 
-                style={{position: 'absolute', middle: 50, right: 0,top: -50}}
-              />
-              <Button type="submit" disabled={console.log()} 
-                style={{position: 'absolute', middle: 50, right: 0,top: -90}}>Upload</Button>
-            </Form>
-            
-            <p>Username</p>
-            <div class="ui fluid icon input">
-              <input 
-                placeholder={user.attributes.username} 
-                type="text" 
-                onChange={console.log()}
-              />
-            </div>
-            <Divider></Divider>
-  
-            <p>Email</p>
-            <div class="ui fluid icon input">
-              <input 
-                placeholder={user.attributes.email} 
-                type="text" 
-                onChange={console.log()}
-              />
-            </div>
-            <Divider></Divider>
-  
-            <p>Birth Date  </p>
-            <div class="ui fluid icon input">
-              <input placeholder={user.attributes.birthdate} 
-              type="text" 
-              onChange={console.log()}></input>
-            </div>
-            <Divider></Divider>
-  
-            <Button onClick={console.log()}>Submit Changes</Button>
-          </div>
+          <Card>
+            <Card.Content>
+              <Card.Header>{campaign.get('name')}</Card.Header>
+              <Card.Meta>
+                <span className='date'>{campaign.get('next_vote')}</span>
+              </Card.Meta>
+            </Card.Content>
+            <Card.Content extra>
+              <a>
+                <Icon name='user' />
+                {campaign.get('owner')}
+              </a>
+            </Card.Content>
+          </Card>
         );
+      },(err) => {});
+      // console.log(JSON.stringify(result));
+      //console.log(err);
+      return ( <div> Loading </div>);
+    }
+    if(isAuthenticated) {
+      try{
+        return campaigns.map(campaign => renderCampaign(campaign));
+      }catch(err){
+        console.log(err)
+        return <div> DataLoading </div> 
+      }
+      
+      
       } else {
         return (
           <div >
@@ -79,4 +90,3 @@ export const ShowCampaigns = () => {
 
 }
 
-export default ShowCampaigns;

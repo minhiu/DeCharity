@@ -63,10 +63,15 @@ export default () => {
         console.log(results);
     }
 
+    const logMoralis = async () => {
+       const result = await Moralis.Cloud.run("getUserCampaignsData")
+       console.log(result);
+    }
+
     return (
         <Layout>
             <Container>
-                <Button onClick={enterData}> Press To enter data! </Button>
+                <Button onClick={logMoralis}> Press To enter data! </Button>
             </Container>
         </Layout>
 
