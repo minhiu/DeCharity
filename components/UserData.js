@@ -44,7 +44,6 @@ export const SignUp = () => {
     }
 
     if(isAuthenticated) {
-
       return (
         <div>
           <>
