@@ -5,6 +5,9 @@ import Layout from '../components/Layout';
 import { Link } from '../routes';
 import { Authentication } from '../components/Authentication';
 import { MoralisProvider } from "react-moralis";
+import { ToastContainer, toast} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 class CampaignIndex extends Component {
   
@@ -36,7 +39,7 @@ class CampaignIndex extends Component {
         <MoralisProvider
           appId="oiT6sgUAkVpbXNHatAuoB0r9dpwjK0qR5rfFVF4z"
           serverUrl="https://v8fuoirhamw1.usemoralis.com:2053/server">
-            <Authentication></Authentication>
+          <Authentication></Authentication>
         <div>
           <h3>Open Campaign</h3>
           <Link route="/campaigns/new">
@@ -46,7 +49,6 @@ class CampaignIndex extends Component {
           </Link>
           {this.renderCampaigns()}
         </div>
-        
         </MoralisProvider>
       </Layout>
     );
