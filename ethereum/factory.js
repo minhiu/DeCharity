@@ -1,9 +1,11 @@
 import web3 from './web3';
-import CampaignFactory from './build/CampaignFactory.json';
+import contracts from './build/contracts.json';
+const { contractAddress } = require('../ADDRESS.js');
 
+const CampaignFactory = contracts['Campaign.sol']['CampaignFactory'];
 const instance = new web3.eth.Contract(
-  JSON.parse(CampaignFactory.interface),
-  '0x4aA98317f9B49BF9ad3821C2e303d196f581B05c'
+  (CampaignFactory.abi),
+  contractAddress.latest
 );
 
 export default instance;
