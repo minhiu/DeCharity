@@ -2,9 +2,10 @@ const assert = require('assert');
 const ganache = require('ganache-cli');
 const Web3 = require('web3');
 const web3 = new Web3(ganache.provider());
+const contracts = require('../ethereum/build/contracts.json')
 
-const compiledFactory = require('../ethereum/build/CampaignFactory.json')
-const compiledCampaign = require('../ethereum/build/Campaign.json')
+const cammpaignFactoryContract = contracts['Campaign.sol']['CampaignFactory'];
+const campaignContract = contracts['Campaign.sol']['Campaign'];
 
 let accounts;
 let factory;
@@ -13,14 +14,13 @@ let campaign;
 
 beforeEach(async () => {
   accounts = await web3.eth.getAccounts();
-  
-  factory = await new web3.eth.Contract(JSON.parse(compiledFactory.interface))
-    .deploy({ data: compiledFactory.bytecode })
-    .send({ from: accounts[0], gas: '1000000' });
+  factory = await new web3.eth.Contract(cammpaignFactoryContract.abi)
+    .deploy({ data: cammpaignFactoryContract.evm.bytecode.object })
+    .send({ from: accounts[0], gas: '5000000' });
   
   await factory.methods.createCampaign('100').send({
       from: accounts[0],
-      gas: '1000000'
+      gas: '5000000'
   });
 
   [campaignAddress] = await factory.methods.getDeployedCampaigns().call();
@@ -28,7 +28,7 @@ beforeEach(async () => {
   // Campaign Contract is created differently, because it was already deployed
   // We only retrieve it using its address
   campaign = await new web3.eth.Contract(
-    JSON.parse(compiledCampaign.interface), 
+    campaignContract.abi, 
     campaignAddress
   );
 });
@@ -73,9 +73,14 @@ describe('Campaigns', () => {
   });
 
   it('allow a manager to make a payment request', async () => {
+    await campaign.methods.contribute().send({
+      from: accounts[0],
+      value: web3.utils.toWei('10', 'ether')
+    });
+
     await campaign.methods
     .createRequest('Buy MacBook Pros', '200', accounts[1])
-    .send({ from: accounts[0], gas: '1000000' });
+    .send({ from: accounts[0], gas: '5000000' });
 
     const request = await campaign.methods.requests(0).call();
     assert.equal(request.description, 'Buy MacBook Pros');
@@ -89,21 +94,35 @@ describe('Campaigns', () => {
 
     await campaign.methods.becomeApprover().send({
       from: accounts[0],
-      gas: '1000000'
+      gas: '5000000'
+    });
+
+    await campaign.methods.contribute().send({
+      from: accounts[2],
+      value: web3.utils.toWei('5', 'ether')
+    });
+
+    await campaign.methods.becomeApprover().send({
+      from: accounts[2],
+      gas: '5000000'
     });
 
     await campaign.methods
       .createRequest('Buy Food', web3.utils.toWei('5', 'ether'), accounts[1])
-      .send({ from: accounts[0], gas: '1000000' });
+      .send({ from: accounts[0], gas: '5000000' });
 
     await campaign.methods.approveRequest(0).send({
       from: accounts[0],
-      gas: '1000000'
+      gas: '5000000'
+    });
+    await campaign.methods.approveRequest(0).send({
+      from: accounts[2],
+      gas: '5000000'
     });
 
     await campaign.methods.finalizeRequest(0).send({
       from: accounts[0],
-      gas: '1000000'
+      gas: '5000000'
     });
 
     let balance = await web3.eth.getBalance(accounts[1]);
