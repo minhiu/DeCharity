@@ -3,6 +3,10 @@ import factory from '../ethereum/factory';
 import { Card, Button } from 'semantic-ui-react';
 import Layout from '../components/Layout';
 import { Link } from '../routes';
+import { ToastContainer, toast} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+
 
 class CampaignIndex extends Component {
   static async getInitialProps() {
@@ -28,8 +32,15 @@ class CampaignIndex extends Component {
   }
 
   render() {
+    //toast("Welcome to DeCharity!");
     return (
       <Layout>
+        <>
+        <ToastContainer
+          position="top-right"
+          autoClose={3000}
+          />
+        </>
         <div>
           <h3>Open Campaign</h3>
           <Link route="/campaigns/new">
