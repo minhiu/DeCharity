@@ -4,7 +4,7 @@ import Campaign from "../../ethereum/campaign";
 import { Card, Grid, Button } from 'semantic-ui-react';
 import web3 from "../../ethereum/web3";
 import ContributeForm from "../../components/ContributeForm";
-import { Link } from '../../routes';
+import { Router, Link } from '../../routes';
 import { ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -18,16 +18,31 @@ class CampaignShow extends Component {
       minimumContribution: summary[0],
       balance: summary[1],
       requestsCount: summary[2],
-      approversCount: summary[3],
-      manager: summary[4]
+      contributorsCount: summary[3],
+      approversCount: summary[4],
+      manager: summary[5]
     };
   }
+
+  constructor(props) {
+    super()
+    this.campaign = Campaign(props.address);
+  }
+
+  async componentDidMount() {
+    this.accounts = await web3.eth.getAccounts();
+  }
+
+  state = {
+    loadingBecomingApprover: false
+  };
 
   renderCards() {
     const {
       minimumContribution,
       balance,
       requestsCount,
+      contributorsCount,
       approversCount,
       manager
     } = this.props;
@@ -40,8 +55,8 @@ class CampaignShow extends Component {
         style: { overflowWrap: 'break-word' }
       },
       {
-        header: minimumContribution,
-        meta:'Minimum Contribution (wei)',
+        header: web3.utils.fromWei(minimumContribution, 'ether'),
+        meta:'Minimum Contribution (ether)',
         description: 'Minimum amount of donation in wei to become an approver.',
         style: { overflowWrap: 'break-word' }
       },
@@ -52,9 +67,15 @@ class CampaignShow extends Component {
         style: { overflowWrap: 'break-word' }
       },
       {
+        header: contributorsCount,
+        meta:'Number of Contributors',
+        description: 'Number of people who have already donated into this campaign.',
+        style: { overflowWrap: 'break-word' }
+      },
+      {
         header: approversCount,
         meta:'Number of Approvers',
-        description: 'Number of people who have already donated into this campaign.',
+        description: 'Number of people who have privileges to approve requests in this campaign.',
         style: { overflowWrap: 'break-word' }
       },
       {
@@ -65,6 +86,18 @@ class CampaignShow extends Component {
       }
     ]
     return <Card.Group items={items} />
+  }
+
+  onBecomeApprover = async () => {
+    this.setState({ loadingBecomingApprover: true })
+    try {
+      await this.campaign.methods.becomeApprover().send({
+        from: this.accounts[0]
+      });
+    } catch(err) { console.log(err) };
+    
+    this.setState({ loadingBecomingApprover: false });
+    Router.replaceRoute(`/campaigns/${this.props.address}`);
   }
 
   render() {
@@ -95,6 +128,9 @@ class CampaignShow extends Component {
                   <Button primary>View Request</Button>
                 </a>
               </Link>
+              <Button secondary onClick={this.onBecomeApprover} loading={this.state.loadingBecomingApprover}>
+                Become an approver
+              </Button>
             </Grid.Column>
           </Grid.Row>
 
