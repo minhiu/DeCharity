@@ -3,6 +3,8 @@ import { Form, Input, Button, Message } from 'semantic-ui-react';
 import Campaign from '../ethereum/campaign';
 import web3 from '../ethereum/web3';
 import { Router } from '../routes';
+import { ToastContainer, toast} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 class ContributeForm extends Component {
   state = {
@@ -32,9 +34,16 @@ class ContributeForm extends Component {
 
   render() {
     return (
+      
       <Form onSubmit={this.onSubmit} error={!!this.state.errorMessage}>
+        <>
+        <ToastContainer
+          position="top-right"
+          autoClose={4000}
+          />
+        </>
         <Form.Field>
-          <label>Amout to Contribute</label>
+          <label>Amount to Contribute</label>
           <Input 
             label="ether"
             labelPosition="right"
