@@ -1,9 +1,10 @@
 import web3 from './web3';
-import Campaign from './build/Campaign.json';
+import contracts from './build/contracts.json';
 
 export default (address) => {
+  const campaign = contracts['Campaign.sol']['Campaign'];
   return new web3.eth.Contract(
-    JSON.parse(Campaign.interface),
+    campaign.abi,
     address
   );
 };
