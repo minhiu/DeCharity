@@ -59,6 +59,13 @@ class NewCampaign extends Component {
               value={this.state.minimumContribution}
               onChange={event => this.setState({ minimumContribution: event.target.value })} 
             />
+            <label>Title</label>
+            <Input>
+
+            </Input>
+            <label>Description</label>
+            <Input>
+            </Input>
           </Form.Field>
 
           <Message error header="Oops..." content={this.state.errorMessage} />

@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import factory from '../ethereum/factory';
-import { Card, Button } from 'semantic-ui-react';
+import { Card, Button, Image} from 'semantic-ui-react';
 import Layout from '../components/Layout';
 import { Link } from '../routes';
 import { ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
 
 
 class CampaignIndex extends Component {
@@ -18,11 +17,14 @@ class CampaignIndex extends Component {
   renderCampaigns() {
     const items = this.props.campaigns.map(address => {
       return {
-        header: address,
         description: (
+          <>
+          <Image src="https://paysimple.com/blog/wp-content/uploads/2018/02/hand-putting-coins-in-glass-jar-for-giving-and-donation-concept-picture-id813128966.jpg" />
+          <p>{address}</p>
           <Link route={`/campaigns/${address}`}>
             <a>View Campaign</a>
           </Link>
+          </>
         ),
         fluid: true
       };
