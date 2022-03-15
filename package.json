@@ -5,8 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha",
-    "dev": "webpack serve",
-    "build": "webpack"
+    "dev": "node server.js"
   },
   "author": "",
   "license": "ISC",
@@ -33,10 +32,6 @@
     "@babel/preset-env": "^7.16.11",
     "@babel/preset-react": "^7.16.7",
     "babel-loader": "^8.2.3",
-    "file-loader": "^6.2.0",
-    "html-webpack-plugin": "^5.5.0",
-    "webpack": "^5.69.1",
-    "webpack-cli": "^4.9.2",
-    "webpack-dev-server": "^4.7.4"
+    "file-loader": "^6.2.0"
   }
 }
