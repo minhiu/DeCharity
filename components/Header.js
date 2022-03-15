@@ -23,7 +23,7 @@ export default () => {
         </Link>
       </Menu.Menu>
       <Menu.Menu position="right">
-        <Link route="/">
+        <Link route="/campaigns/donatedCampaignsView/CampaignsIndex">
           <a className="item">Campaigns</a>
         </Link>
         <Link route="/campaigns/new">
