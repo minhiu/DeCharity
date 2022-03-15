@@ -18,6 +18,9 @@ export default () => {
         <Link route="/contact">
           <a className="item">Contact</a>
         </Link>
+        <Link route="/newsfeed">
+          <a className='item'>Newsfeed</a>
+        </Link>
       </Menu.Menu>
       <Menu.Menu position="right">
         <Link route="/">
