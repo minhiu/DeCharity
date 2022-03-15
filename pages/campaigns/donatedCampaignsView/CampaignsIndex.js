@@ -2,7 +2,7 @@ import React from 'react';
 import { MoralisProvider } from 'react-moralis';
 import {ChakraProvider} from "@chakra-ui/react";
 import HardCodeDataEntry from '../../../components/HardCodeDataEntry';
-import Authentication from '../../../components/Authentication'
+import Authentication from '../../../components/Authentication.js'
 
 import CampPage from './TestCampaigns';
 
