@@ -35,7 +35,6 @@ const  CampPage = () => {
                 <h1>Voted Campaigns</h1>
                 <p> Your previously voted campaings:</p>
                 <div>
-                
                     {camps.map(campaign => (
                         
                         campaign['campInfo'].map(possibleCamp => (
@@ -43,6 +42,7 @@ const  CampPage = () => {
                                 <Card>
                                     <Card.Content>
                                         <Card.Header>{possibleCamp['name']}</Card.Header>
+                                        <img src={possibleCamp['CampaignThumbnail']} alt=""/>
                                         <Card.Meta>
                                             <span className='date'>{campaign['next_vote'].toString()}</span>
                                         </Card.Meta>
