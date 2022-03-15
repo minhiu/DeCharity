@@ -26,12 +26,5 @@
     "semantic-ui-react": "^2.0.4",
     "solc": "^0.8.12",
     "web3": "^1.6.0"
-  },
-  "devDependencies": {
-    "@babel/core": "^7.17.5",
-    "@babel/preset-env": "^7.16.11",
-    "@babel/preset-react": "^7.16.7",
-    "babel-loader": "^8.2.3",
-    "file-loader": "^6.2.0"
   }
 }
