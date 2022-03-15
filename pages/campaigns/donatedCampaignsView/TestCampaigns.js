@@ -26,7 +26,7 @@ const  CampPage = () => {
         }, [user]);
 
     
-    if (camps){
+    if ( camps && camps.length > 0){
         console.log(camps[0]['campInfo'][0]);
         console.log(camps[0]['campInfo'][0]['_p_owner']);
         //console.log(JSON.stringify(camps[0].get('campaign')));

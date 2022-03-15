@@ -71,7 +71,7 @@ export default () => {
     return (
         <Layout>
             <Container>
-                <Button onClick={logMoralis}> Press To enter data! </Button>
+                <Button onClick={enterData}> Press To enter data! </Button>
             </Container>
         </Layout>
 
