@@ -5,8 +5,6 @@ import Layout from '../components/Layout';
 import { Link } from '../routes';
 import { Authentication } from '../components/Authentication';
 import { MoralisProvider } from "react-moralis";
-import { ToastContainer, toast} from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 
 class CampaignIndex extends Component {
