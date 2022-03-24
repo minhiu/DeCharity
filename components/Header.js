@@ -22,7 +22,7 @@ export default () => {
           <a className='item'>Newsfeed</a>
         </Link>
         <Link route="/support">
-          <a className='item'>How to Use</a>
+          <a className='item'>Support</a>
         </Link>
       </Menu.Menu>
       <Menu.Menu position="right">

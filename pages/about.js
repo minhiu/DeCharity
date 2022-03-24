@@ -4,24 +4,24 @@ import Layout from "../components/Layout";
 export default function About() {
     return (
         <Layout>
-            <div className="about">
-                <div className="container">
-                    <div className="row align-items-center my-5">
-                        <img
-                            class="img-fluid rounded mb-4 mb-lg-0"
-                            src="http://placehold.it/900x400"
-                            alt=""
-                        />
-                    </div>
-                    <div className="col-lg-5">
-                        <h1 className="font-weight-light">About</h1>
-                        <p>
-                            Lorem Ipsum is simply dummy text of the printing and typesetting
-                            industry. Lorem Ipsum has been the industry's standard dummy text
-                            ever since the 1500s, when an unknown printer took a galley of
-                            type and scrambled it to make a type specimen book.
-                        </p>
-                    </div>
+            <div className="about" style={{
+                display: "grid",
+                gridTemplateColumns: "1fr 1fr"
+            }}>
+                <div className="video"> 
+                    <iframe 
+                        width="560" 
+                        height="315" 
+                        src="https://www.youtube.com/embed/C0DPdy98e4c" 
+                        title="YouTube video player" 
+                        frameBorder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowFullScreen>
+                    </iframe>
+                </div>
+                <div className="description">
+                    <h3>About Us</h3>
+                    <br></br>
                 </div>
             </div>
         </Layout>
