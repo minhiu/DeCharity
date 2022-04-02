@@ -6,7 +6,7 @@ import {useMoralis} from 'react-moralis';
 
 
 
-const  CampPage = () => {
+const CampPage = () => {
     const {user} = useMoralis();
     const [camps, setCamps] = useState(null);
 
