@@ -1,7 +1,7 @@
 import React, { Component} from "react";
 import Layout from "../../components/Layout";
 import Campaign from "../../ethereum/campaign";
-import { Image, Card, Grid, Button } from 'semantic-ui-react';
+import { Image, Card, Grid, Button, Form } from 'semantic-ui-react';
 import web3 from "../../ethereum/web3";
 import ContributeForm from "../../components/ContributeForm";
 import { Router, Link } from '../../routes';
@@ -29,6 +29,7 @@ class CampaignShow extends Component {
     super()
     this.campaign = Campaign(props.address);
     this.campaignPhoto = "";
+    this.localFile = null;
   }
 
   async componentDidMount() {
@@ -48,10 +49,24 @@ class CampaignShow extends Component {
     getPhoto(this.props.address).then(photoUrl => this.setState({campaignPhoto: photoUrl}));
   }
 
+
+  handleChange = (event) => {
+    if (event.currentTarget.files) {
+      this.setState({localFile: event.currentTarget.files[0]});
+    }
+  }
+
+  handleUpload = async () => {
+    console.log("Uploading file...");
+    if (this.localFile) {
+      const params = {address: this.props.address, file: this.localFile};
+    }
+  }
+
   state = {
     loadingBecomingApprover: false
   };
-
+  
   renderCards() {
     const {
       minimumContribution,
@@ -132,7 +147,14 @@ class CampaignShow extends Component {
           />
         </>
         <h3>Campaign Detail</h3>
-        <img src={this.state.campaignPhoto} alt="Campaign Photo" style={{width: "50%"}}/>
+        <Image src={this.state.campaignPhoto} alt="Campaign Photo" style={{width: "50%"}}/>
+        <Form onSubmit={handleUpload} error={!!error}>
+              <Input type="file" onChange={handleChange} className="inputfile ui grey right floated button" 
+                style={{position: 'absolute', middle: 50, right: 0,top: -50}}
+              />
+              <Button type="submit" disabled={isUploading} 
+                style={{position: 'absolute', middle: 50, right: 0,top: -90}}>Upload</Button>
+        </Form>
         <Grid>
           <Grid.Row>
             <Grid.Column width={10}>
