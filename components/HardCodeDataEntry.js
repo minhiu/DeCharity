@@ -8,16 +8,18 @@ const Moralis = require('moralis');
 
 export default () => {
     const { isAuthenticated, user, setUserData} = useMoralis();
-
+    //Quick and dirty setup to get campaigns for testing DEPRECATED
     const enterData = async () => {
+     //Declare both campaign types
         const DonatedCampaign = Moralis.Object.extend('DonatedCampaign');
-        const Campaign = Moralis.Object.extend('Campaign');
 
+        const Campaign = Moralis.Object.extend('Campaign');
+        //Create all the campaign objects
         const donatedCampaign = new DonatedCampaign();
         const donatedCampaign2 = new DonatedCampaign();
         const donatedCampaign3 = new DonatedCampaign();
         const donatedCampaign4 = new DonatedCampaign();
-
+        //Fill in all the campaigns with info
         const testcamp1 = new Moralis.Query(Campaign);
         testcamp1.equalTo('name', 'Test Camp1');
         const results = await testcamp1.find();
@@ -32,7 +34,7 @@ export default () => {
         const results4 = await testcamp4.find();
 
 
-
+        //Set and save all the campaigns
         donatedCampaign.set("campaign",results[0]);
         donatedCampaign.set("donor",user);
         donatedCampaign.set("next_vote",user.createdAt);
@@ -53,21 +55,24 @@ export default () => {
         
 
     }
+    //Log testing for adjacent stuff
     const logDonatedCampaigns = async () => {
         const DonatedCampaign = Moralis.Object.extend('DonatedCampaign');
         const Campaign = Moralis.Object.extend('Campaign');
-
+        //Create a querty to find a donated campaign
         const testcamp1 = new Moralis.Query(DonatedCampaign);
         testcamp1.equalTo('donor', user);
         const results = await testcamp1.find();
         console.log(results);
     }
 
+
+    //Testing get user campaigns
     const logMoralis = async () => {
        const result = await Moralis.Cloud.run("getUserCampaignsData")
        console.log(result);
     }
-
+    //JSX frontend to power the functions
     return (
         <Layout>
             <Container>

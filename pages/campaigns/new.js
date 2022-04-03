@@ -6,6 +6,8 @@ import web3 from '../../ethereum/web3';
 import { Router } from '../../routes';
 import { ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+const Moralis = require('moralis');
+
 
 class NewCampaign extends Component {
   state = {
@@ -24,12 +26,22 @@ class NewCampaign extends Component {
       const address = await factory.methods
         .createCampaign(this.state.minimumContribution)
         .send({ from: accounts[0] });
+        //There is definitely a better way to do this like we should just init this once but I'm not sure where because im not sure where our root is.
+        const serverUrl = "https://v8fuoirhamw1.usemoralis.com:2053/server";
+        const appId = "oiT6sgUAkVpbXNHatAuoB0r9dpwjK0qR5rfFVF4z";
+        await Moralis.start({serverUrl,appId});
+        const Campaign = Moralis.Object.extend('Campaign');
+        const campaign = new Campaign();
+        campaign.set('address', address.to);
+        campaign.set('owner', accounts[0]);
+        campaign.set('name', address.to);
+        campaign.save();
         
       Router.pushRoute('/');
     } catch (err) {
       this.setState({ errorMessage: err.message });
     }
-
+    
     this.setState({ loading: false });
   };
 /*

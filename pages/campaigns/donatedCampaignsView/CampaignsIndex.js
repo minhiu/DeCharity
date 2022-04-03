@@ -8,7 +8,7 @@ import CampPage from './TestCampaigns';
 
 export default () => {
   return(
-
+    //Basic setup of all the components with the hard code data entry if people need to enter data
     <MoralisProvider
           appId="oiT6sgUAkVpbXNHatAuoB0r9dpwjK0qR5rfFVF4z"
           serverUrl="https://v8fuoirhamw1.usemoralis.com:2053/server"
@@ -16,6 +16,7 @@ export default () => {
         <ChakraProvider>
           <Authentication></Authentication>
           <HardCodeDataEntry />
+           //Entry point for the campaign page
           <CampPage  />
         </ChakraProvider> 
     </MoralisProvider>
