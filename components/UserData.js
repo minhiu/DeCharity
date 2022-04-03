@@ -6,7 +6,19 @@ import { ToastContainer, toast, Zoom} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 export const SignUp = () => {
+     
     const { isAuthenticated, user, setUserData, authError} = useMoralis();
+    const [displayPic,setDisplayPic] = useState("");
+    if (displayPic == ""){
+        try{
+          setDisplayPic(user.attributes.profile_url);
+        }
+        catch(err){
+          console.log(user);
+        }
+    }
+    
+
     const { error, isUploading, saveFile} = useMoralisFile();
 
     const [ username, setUsername ] = useState();
@@ -32,6 +44,7 @@ export const SignUp = () => {
       if (localFile) {
         let temp = await saveFile("upload.jpeg", localFile);
         user.set("profile_url", temp._url);
+        setDisplayPic(temp._url);
         user.save();
         return temp; 
       }
@@ -44,6 +57,7 @@ export const SignUp = () => {
     }
 
     if(isAuthenticated) {
+      
       return (
         <div>
           <>
@@ -52,7 +66,7 @@ export const SignUp = () => {
             <Box>
               <Image 
               style={{width: 200, height: 200, borderRadius: 200/ 2}}
-              src={user.attributes.profile_url} />
+              src={displayPic} />
             </Box>
 
             <Form onSubmit={handleUpload} error={!!error}>
