@@ -53,6 +53,9 @@ contract Campaign {
     mapping(address => bool) public contributors; // Map to keep track who has donated (No minimum value required)
     mapping(address => bool) public approvers; // Map to keep track who has donated above the minimum and became approvers
     mapping(address => uint) public balances; // Map to keep track how much an user has donated to the campaign
+    mapping(address => uint) public percentHolding; // Map to keep track the percentage of the amount current user holds compared to the pool (***Refund purpose)
+    mapping(address => uint) public valueHolding; // Map to keep track the current values the user holds in the pool (***Refund purpose)
+    address[] public contributorsArr; // Same value as contributors mapping, but used to iterate to refund users (***Refund purpose)
     uint public contributorsCount; // Count of all contributors
     uint public approversCount; // Count of all approvers
 
@@ -86,6 +89,7 @@ contract Campaign {
         // Count number of contributors (distinctively)
         if (!contributors[msg.sender]) {
             contributors[msg.sender] = true;
+            contributorsArr.push(msg.sender);
             contributorsCount++;
         }
         
@@ -200,6 +204,15 @@ contract Campaign {
     /** Return total number of requests inside a campaign */
     function getRequestsCount() public view returns (uint) {
         return requests.length;
+    }
+
+    /** Calculate current users pool (***Refund purpose) */
+    function calculatePool() private {
+        
+    }
+
+    /** Refund users if a request is rejected */
+    function refundRequest(uint index) public contributionCheck {
     }
 }
 
