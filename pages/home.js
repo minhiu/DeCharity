@@ -59,13 +59,16 @@ export default function Home() {
                     <div className='mission-info' style={{
                         background: '#EAF9FE'
                     }}>
-                        <h2 className='section-title'>
+                        <h2 className='section-title'  style={{
+                            textAlign: "center",
+                        }}>
                            <b> Why Us? </b>
                         </h2>
-                        <hr></hr>
+                        <hr style={{width: "30%"}}></hr>
                         <br></br>
                         <div className='item-container' style={{
                             display: 'flex',
+                            flexShrink: "1",
                             justifyContent: 'center'
                         }}>
                             <div className='itemContent'>
@@ -90,9 +93,13 @@ export default function Home() {
                     <br></br>
 
                     <div className='join-promo'>
-                        <h2 className='section-title'>Ready to Start?</h2>
-                        <hr></hr>
+                        <h2 className='section-title' style={{
+                            textAlign: "center"
+                        }}>
+                            Ready to Start?
+                        </h2>
                         <br></br>
+                        <hr style={{width: "30%"}}></hr>
                         <div className='item-container' style={{
                             display: 'flex',
                             justifyContent: 'space-around'
