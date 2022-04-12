@@ -34,7 +34,9 @@ class CampaignShow extends Component {
 
   async componentDidMount() {
     this.accounts = await web3.eth.getAccounts();
-
+    console.log(Moralis);
+    console.log(Moralis.User);
+    console.log(Moralis.File);
     const getPhoto = async (address) => {
       const serverUrl = "https://v8fuoirhamw1.usemoralis.com:2053/server";
       const appId = "oiT6sgUAkVpbXNHatAuoB0r9dpwjK0qR5rfFVF4z";
@@ -50,13 +52,13 @@ class CampaignShow extends Component {
   }
 
 
-  handleChange = (event) => {
+  async handleChange(event) {
     if (event.currentTarget.files) {
       this.setState({localFile: event.currentTarget.files[0]});
     }
   }
 
-  handleUpload = async () => {
+  async handleUpload() {
     console.log("Uploading file...");
     if (this.localFile) {
       const params = {address: this.props.address, file: this.localFile};
@@ -148,13 +150,7 @@ class CampaignShow extends Component {
         </>
         <h3>Campaign Detail</h3>
         <Image src={this.state.campaignPhoto} alt="Campaign Photo" style={{width: "50%"}}/>
-        <Form onSubmit={handleUpload} error={!!error}>
-              <Input type="file" onChange={handleChange} className="inputfile ui grey right floated button" 
-                style={{position: 'absolute', middle: 50, right: 0,top: -50}}
-              />
-              <Button type="submit" disabled={isUploading} 
-                style={{position: 'absolute', middle: 50, right: 0,top: -90}}>Upload</Button>
-        </Form>
+        
         <Grid>
           <Grid.Row>
             <Grid.Column width={10}>

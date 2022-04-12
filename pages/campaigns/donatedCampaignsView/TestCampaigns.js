@@ -32,6 +32,7 @@ const CampPage = () => {
                     };
                 })
             );
+            console.log(donatedCampaigns);
             //Update the state with the list of campaigns
             setCamps(donatedCampaigns);
         }
