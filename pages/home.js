@@ -10,7 +10,13 @@ export default function Home() {
         <Layout>
             <div>
                 <h1>DeCharity</h1>
-                <Carousel />
+                <div className="banner">
+                    <a href="https://imgur.com/tFVCsNM">
+                        <img src="https://i.imgur.com/tFVCsNM.png" 
+                        title="source: imgur.com" 
+                        style={{height:"400px", width:"1080px"}}/>
+                    </a>
+                </div>
                 
                 <div className='home'>
                     <div className='featured-projects'>
