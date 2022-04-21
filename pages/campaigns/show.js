@@ -1,12 +1,13 @@
 import React, { Component} from "react";
 import Layout from "../../components/Layout";
 import Campaign from "../../ethereum/campaign";
-import { Card, Grid, Button } from 'semantic-ui-react';
+import { Image, Card, Grid, Button, Form } from 'semantic-ui-react';
 import web3 from "../../ethereum/web3";
 import ContributeForm from "../../components/ContributeForm";
 import { Router, Link } from '../../routes';
 import { ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+const Moralis = require('moralis');
 
 class CampaignShow extends Component {
   static async getInitialProps(props) {
@@ -27,16 +28,47 @@ class CampaignShow extends Component {
   constructor(props) {
     super()
     this.campaign = Campaign(props.address);
+    this.campaignPhoto = "";
+    this.localFile = null;
   }
 
   async componentDidMount() {
     this.accounts = await web3.eth.getAccounts();
+    console.log(Moralis);
+    console.log(Moralis.User);
+    console.log(Moralis.File);
+    const getPhoto = async (address) => {
+      const serverUrl = "https://v8fuoirhamw1.usemoralis.com:2053/server";
+      const appId = "oiT6sgUAkVpbXNHatAuoB0r9dpwjK0qR5rfFVF4z";
+      await Moralis.start({serverUrl,appId});
+      const query = new Moralis.Query( Moralis.Object.extend("Campaign"));
+      console.log()
+      query.equalTo("address", this.props.address);
+      const result = await query.first();
+      const photoUrl = await result.get("CampaignThumbnail");
+      return photoUrl;
+    }
+    getPhoto(this.props.address).then(photoUrl => this.setState({campaignPhoto: photoUrl}));
+  }
+
+
+  async handleChange(event) {
+    if (event.currentTarget.files) {
+      this.setState({localFile: event.currentTarget.files[0]});
+    }
+  }
+
+  async handleUpload() {
+    console.log("Uploading file...");
+    if (this.localFile) {
+      const params = {address: this.props.address, file: this.localFile};
+    }
   }
 
   state = {
     loadingBecomingApprover: false
   };
-
+  
   renderCards() {
     const {
       minimumContribution,
@@ -46,7 +78,8 @@ class CampaignShow extends Component {
       approversCount,
       manager
     } = this.props;
-
+    
+    
     const items = [
       {
         header: manager,
@@ -85,7 +118,9 @@ class CampaignShow extends Component {
         style: { overflowWrap: 'break-word' }
       }
     ]
-    return <Card.Group items={items} />
+    return (
+        <Card.Group items={items} />
+      );
   }
 
   onBecomeApprover = async () => {
@@ -101,6 +136,10 @@ class CampaignShow extends Component {
   }
 
   render() {
+    //Async function to get the campaign photo
+    
+    
+    
     return (
       <Layout>
         <>
@@ -110,6 +149,8 @@ class CampaignShow extends Component {
           />
         </>
         <h3>Campaign Detail</h3>
+        <Image src={this.state.campaignPhoto} alt="Campaign Photo" style={{width: "50%"}}/>
+        
         <Grid>
           <Grid.Row>
             <Grid.Column width={10}>

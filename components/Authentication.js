@@ -19,3 +19,4 @@ export const Authentication = () => {
       </Grid>
   );
 };
+export default Authentication;
