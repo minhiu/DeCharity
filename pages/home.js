@@ -1,40 +1,26 @@
 import React, {Component} from 'react';
 import Layout from '../components/Layout';
-import Image from 'next/image';
-import logo from './decharitylogo.png';
+// import { Carousel } from "react-responsive-carousel";
+// import "react-responsive-carousel/lib/styles/carousel.min.css";
+import Carousel from '../components/ImageCarousel';
 import { Card, Button } from 'semantic-ui-react';
 
 export default function Home() {
     return (
         <Layout>
-            {/* <div style={{
-                position: 'absolute', left: '50%', right: '100%',
-                transform: 'translate(-50%, 50%)'
-            }}> */}
             <div>
                 <h1>DeCharity</h1>
-                <div className='image-carosel-container'>
-                    <img className='logo-image' src="https://i.imgur.com/QBQEjqN.png" alt="logo" 
-                        width="100" height="100"/>
-                    <br></br>
-                    <div className='image-carosel' style={{
-                        borderWidth: 3,
-                    }}>
-                        
-                    </div>
-                    <p1>
-                        insert rotating image pool here
-                    </p1>
-                </div>
-                <div classname='home'>
-                    <div classname='featured-projects'>
-                        <h2 classname='section-title'>
+                <Carousel />
+                
+                <div className='home'>
+                    <div className='featured-projects'>
+                        <h2 className='section-title'>
                             Featured Projects
                         </h2>
                         <div className='project-card'>
 
                         </div>
-                        <h4 classname='description-title'>
+                        <h4 className='description-title'>
                             Check out currently active projects to support!
                         </h4>
                         {/* <!-- This is where we could put some of the sample projects--> */}
@@ -128,3 +114,4 @@ export default function Home() {
         </Layout>
     );
 }
+
