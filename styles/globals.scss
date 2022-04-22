@@ -1,0 +1,210 @@
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif !important;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+h1 {
+  color: #035397;
+  font-size: 5rem !important;
+}
+
+h2 {
+  color: #035397;
+  font-size: 4rem;
+}
+
+p {
+  color: #051367;
+  font-size: 2rem !important;
+}
+
+// .container {
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: center;
+//   align-items: center;
+//   text-align: center;
+//   position: fixed;
+// }
+
+/** BEGIN OF COMMON CLASSES */
+.center-abs-div {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  text-align: center;
+}
+
+.fade-in {
+  animation: fadeInAnimation ease 5s;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+  opacity: 0;
+}
+
+.shine {
+  background-image: linear-gradient(
+    -90deg,
+    #222831 0%,
+    #222831,
+    40%,
+    #e3fdfd 49%,
+    #cbf1f5 50%,
+    #a6e3e9 51%,
+    #222831 60%,
+    #222831 100%
+  );
+  background-size: 10em, auto;
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+  animation: shine 5s linear infinite;
+  opacity: 1 !important;
+}
+
+.delay-1s {
+  animation-delay: 1s;
+}
+
+.delay-2s {
+  animation-delay: 2s;
+}
+
+.no-interactions {
+  pointer-events: none;
+  user-select: none;
+}
+
+.abs-top-50 {
+  position: absolute;
+  top: 50px;
+}
+/** END OF COMMON CLASSES */
+
+/** BEGIN OF ANIMATIONS  */
+@-webkit-keyframes fadeInAnimation {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+@-webkit-keyframes shine {
+  0% {
+    background-position: 100%, 0%;
+  }
+  25% {
+    background-position: -20%, 0%;
+  }
+  100% {
+    background-position: -20%, 0%;
+  }
+}
+/** END OF ANIMATIONS */
+
+/** HEADER */
+.nav-link {
+  color: #4b7be5 !important;
+}
+/** END OF HEADER */
+
+/** HOME */
+#home {
+  background-color: #cff1ef;
+  background-image: url("../public/images/background-main.png");
+  background-repeat: no-repeat;
+  background-position: bottom center;
+  height: 100vh;
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+
+  .nav {
+    .nav-link {
+      color: #1b1a17;
+      font-size: 25px;
+      font-weight: 600;
+      padding-left: 30px;
+      padding-right: 30px;
+    }
+  }
+}
+/** END OF HOME */
+
+/** FAQs */
+#faq {
+  background-color: #398AB9;
+
+  .wrapper {
+    width: 100%;
+  }
+
+  h1 {
+    margin-bottom: 20px;
+  }
+
+  .container {
+    background-color: white;
+    color: black;
+    border-radius: 20px;
+    box-shadow: 0 5px 10px 0 rgb(0, 0, 0, 0.25);
+    margin: 20px auto;
+  }
+
+  .question {
+    font-size: 1.2rem;
+    font-weight: 600;
+    padding: 20px 80px 20px 20px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }
+
+  .question::after {
+    content: "\002B";
+    font-size: 2.2rem;
+    position: absolute;
+    right: 20px;
+    transition: 0.2s;
+  }
+
+  .question.active::after {
+    transform: rotate(45deg);
+  }
+
+  .answercont {
+    max-height: 0;
+    overflow: hidden;
+    transition: 0.3s;
+  }
+
+  .answer {
+    padding: 0 20px 20px;
+    line-height: 1.5rem;
+  }
+
+  @media screen and (max-width: 790px) {
+    html {
+      font-size: 14px;
+    }
+  }
+}
+/** END OF FAQs */

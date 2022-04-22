@@ -7,7 +7,7 @@ import { Router } from '../routes';
 
 class RequestRow extends Component {
   constructor(props) {
-    super()
+    super();
     this.campaign = Campaign(props.address);
   }
 

@@ -1,39 +1,39 @@
 import React from "react";
-import { Menu } from "semantic-ui-react";
 import { Link } from '../routes';
 
 export default () => {
   return (
-    <Menu>
-      <Link route="/">
-        <a className="item">DeCharity</a>
-      </Link>
-        <Menu.Menu position="right">
-        <Link route="/home">
-          <a className="item">Home</a>
+    <ul className="nav justify-content-center abs-top-50">
+      <li className="nav-item">
+        <Link route="/#home">
+          <a className="nav-link">Home</a>
         </Link>
-        <Link route="/about">
-          <a className="item">About</a>
+      </li>
+      <li className="nav-item">
+        <Link route="/#about">
+          <a className="nav-link">About Us</a>
         </Link>
-        <Link route="/contact">
-          <a className="item">Contact</a>
+      </li>
+      <li className="nav-item">
+        <Link route="/#roadmap">
+          <a className="nav-link">Road Map</a>
         </Link>
-        <Link route="/newsfeed">
-          <a className='item'>Newsfeed</a>
+      </li>
+      <li className="nav-item">
+        <Link route="/#faq">
+          <a className="nav-link">FAQs</a>
         </Link>
-      </Menu.Menu>
-      <Menu.Menu position="right">
+      </li>
+      <li className="nav-item">
         <Link route="/">
-          <a className="item">Campaigns</a>
+          <a className="nav-link">Campaigns</a>
         </Link>
-        <Link route="/Profile">
-          <a className="item">Profile</a>
+      </li>
+       <li className="nav-item">
+        <Link route="/">
+          <a className="nav-link">Profile</a>
         </Link>
-        <Link route="/campaigns/new">
-          <a className="item">+</a>  
-        </Link>
-        
-      </Menu.Menu>
-    </Menu> 
+      </li>
+    </ul>
   );
 };
