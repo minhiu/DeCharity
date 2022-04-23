@@ -30,7 +30,7 @@ export default () => {
         </Link>
       </li>
        <li className="nav-item">
-        <Link route="/">
+        <Link route="/profile">
           <a className="nav-link">Profile</a>
         </Link>
       </li>
