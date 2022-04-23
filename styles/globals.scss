@@ -45,6 +45,14 @@ p {
   text-align: center;
 }
 
+.pt-10 {
+  padding-top: 6rem;
+}
+
+.pb-10 {
+  padding-bottom: 6rem;
+}
+
 .fade-in {
   animation: fadeInAnimation ease 5s;
   animation-iteration-count: 1;
@@ -143,6 +151,20 @@ p {
       font-weight: 600;
       padding-left: 30px;
       padding-right: 30px;
+
+    }
+    
+    .vl-wrapper {
+      position: relative;
+      
+      .vl {
+        border-left: 6px solid green;
+        border-radius: 1rem;
+        height: 50%;
+        margin: auto 0;
+        position: absolute;
+        top: 25%;
+      }
     }
   }
 }
@@ -169,7 +191,7 @@ p {
   }
 
   .question {
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     font-weight: 600;
     padding: 20px 80px 20px 20px;
     position: relative;
@@ -197,14 +219,120 @@ p {
   }
 
   .answer {
+    font-size: 1.2rem !important;
     padding: 0 20px 20px;
     line-height: 1.5rem;
   }
+}
+/** END OF FAQs */
 
-  @media screen and (max-width: 790px) {
-    html {
+/** ROADMAP */
+#roadmap {
+  h1 {
+    color: #eee;
+  }
+  background-color: #393E46;
+  color: #EEE;
+  padding: 30px 50px;
+  
+  .point {
+    display: flex;
+    flex-direction: column;
+    padding: 10px 50px;
+    position: relative;
+    
+    // &:first-child {
+    //   .point-index {
+    //     top: auto;
+    //     bottom: 0;
+    //     transform: translate(-50%, 2px) !important;
+    //   }
+    // }    
+    
+    // &:last-child {
+    //   .point-index {
+    //     top: 0;
+    //     transform: translate(50%, -2px) !important;
+    //   }
+    // }   
+    
+    &:not(:last-child) {
+      border-bottom: 2px solid gold;
+    }
+
+    &:nth-child(odd) {
+      align-items: flex-start;
+      
+      &:not(:first-child) {
+        border-left: 2px solid gold;
+      }
+      
+      .point-index {
+        left: 0;
+        transform: translate(-50%, -50%);
+      }
+    }
+    
+    &:nth-child(even) {
+      align-items: flex-end;
+      
+      &:not(:last-child) {
+        border-right: 2px solid gold;
+      }
+      
+      .point-index {
+        right: 0;
+        transform: translate(50%, -50%);
+      }
+    }
+    
+    .point-index {
+      position: absolute;
+      top: 50%;
+      width: 40px;
+      height: 40px;
+      background: #151317;
+      border: 2px solid gold;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 23px;
+      font-weight: bold;
+    }
+    
+    .point-label {
+      flex: 1 0 100%;
+      width: 100%;
       font-size: 14px;
+      margin-bottom: 5px;
+      
+      @media (min-width: 641px) {
+        flex: 1 0 50%;
+        width: 50%;
+      }
+    }
+    
+    .point-text {
+      flex: 1 0 100%;
+      width: 100%;
+      font-size: 12px;
+      color: darken(#FFFFFF, 20%);
+      text-align: left;
+      
+      @media (min-width: 641px) {
+        flex: 1 0 50%;
+        width: 50%;
+      }
     }
   }
 }
-/** END OF FAQs */
+/** END OF ROADMAP */
+
+/** FOOTER */
+#footer {
+  width: 100%;
+  background-color: #cff1ef;
+  text-align: center;
+}
+/** END OF FOOTER */
