@@ -17,9 +17,9 @@ class ProfilePage extends Component {
                 <div id="project-card">
                     <div className="card">
                         <div className="card__body">
-                        <img src={props.img} class="card__image" />
-                        <h2 className="card__title">{props.title}</h2>
-                        <p className="card__description">{props.description}</p>
+                            <img src={props.img} class="card__image" />
+                            <h2 className="card__title">{props.title}</h2>
+                            <p className="card__description">{props.description}</p>
                         </div>
                         <button className="card__btn">View Charity</button>
                     </div>
@@ -48,7 +48,6 @@ class ProfilePage extends Component {
         appId="mtI7RNIJyg9YQ9KlY0lxRWT07i948n2P18xGY9lJ"
         serverUrl="https://isnfg1uqrfen.usemoralis.com:2053/server">
                 <div id="profile">
-                    <Header/>
                     <div className="user-profile">
                         <div className="profile-card">
                             <h1 className="card__title"> {user.name} </h1>
@@ -62,13 +61,12 @@ class ProfilePage extends Component {
                         </div>
                     </div>
 
-                        <div id="project-card">
-                            <div class="wrapper">
-                                {cList}
-                            </div>
+                    <div id="project-card">
+                        <div class="wrapper">
+                            {cList}
                         </div>
                     </div>
-              
+                </div>
             </MoralisProvider>
         )
             
