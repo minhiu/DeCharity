@@ -1,19 +1,32 @@
 import React, { Component } from "react";
 import { MoralisProvider, useMoralis, useMoralisFile } from "react-moralis";
-import { Card } from "semantic-ui-react";
+import { Card, Divider } from "semantic-ui-react";
 import { Link } from "../routes";
 import Header from "../components/Header";
 import factory from "../ethereum/factory";
 
 class ProfilePage extends Component {
-
     static async getInitialProps() {
         const campaigns = await factory.methods.getDeployedCampaigns().call();
         return { campaigns };
       }
-
     
     render() {
+        function Card(props) {
+            return (
+                <div id="project-card">
+                    <div className="card">
+                        <div className="card__body">
+                        <img src={props.img} class="card__image" />
+                        <h2 className="card__title">{props.title}</h2>
+                        <p className="card__description">{props.description}</p>
+                        </div>
+                        <button className="card__btn">View Charity</button>
+                    </div>
+              </div>
+            );
+          }
+
         const user = {
             name: 'Bart Veneman',
             username: 'bartveneman',
@@ -22,26 +35,11 @@ class ProfilePage extends Component {
 
         const cList = this.props.campaigns.map((item) => {
             return (
-                <div class="project-cards">
-                    <div class="card">
-                        <div class="card__body">
-                            <img src="https://paysimple.com/blog/wp-content/uploads/2018/02/hand-putting-coins-in-glass-jar-for-giving-and-donation-concept-picture-id813128966.jpg" alt="" class="card__image"></img>
-                            <h2 class="card__title">{item}</h2>
-                            <p class="card__description">Charity descripton</p>
-                        </div>
-                    </div>
-                </div>
-                
-                // <Card 
-                //     className="wrapper">
-                //     <Card.Header className="card__title">
-                //         {item}
-                //     </Card.Header>
-
-                //     <Link route={`/campaigns/${item}`}>
-                //     <a>View Campaign</a>
-                //     </Link>
-                // </Card>
+                    <Card
+                        img="https://paysimple.com/blog/wp-content/uploads/2018/02/hand-putting-coins-in-glass-jar-for-giving-and-donation-concept-picture-id813128966.jpg"
+                        title={item}
+                        description="Charity Description"
+                    />
             );
         })
         
@@ -64,15 +62,16 @@ class ProfilePage extends Component {
                         </div>
                     </div>
 
-                    <div className="profile-projects">
-                        <h2> {user.name}'s Campaigns </h2>
-                        <ol className="cards">
-                            {cList}
-                        </ol>
+                        <div id="project-card">
+                            <div class="wrapper">
+                                {cList}
+                            </div>
+                        </div>
                     </div>
-                </div>
+              
             </MoralisProvider>
-            )
+        )
+            
     } 
 }
 
