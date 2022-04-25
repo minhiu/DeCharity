@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { MoralisProvider, useMoralis, useMoralisFile } from "react-moralis";
 import { Card } from "semantic-ui-react";
+import { Link } from "../routes";
 import Header from "../components/Header";
 import factory from "../ethereum/factory";
 
@@ -8,8 +9,6 @@ class ProfilePage extends Component {
 
     static async getInitialProps() {
         const campaigns = await factory.methods.getDeployedCampaigns().call();
-        // console.log(campaigns);
-        
         return { campaigns };
       }
 
@@ -23,14 +22,28 @@ class ProfilePage extends Component {
 
         const cList = this.props.campaigns.map((item) => {
             return (
-                <Card>
-                    <Card.Header>
-                        {item}
-                    </Card.Header>
-                </Card>
+                <div class="project-cards">
+                    <div class="card">
+                        <div class="card__body">
+                            <img src="https://paysimple.com/blog/wp-content/uploads/2018/02/hand-putting-coins-in-glass-jar-for-giving-and-donation-concept-picture-id813128966.jpg" alt="" class="card__image"></img>
+                            <h2 class="card__title">{item}</h2>
+                            <p class="card__description">Charity descripton</p>
+                        </div>
+                    </div>
+                </div>
+                
+                // <Card 
+                //     className="wrapper">
+                //     <Card.Header className="card__title">
+                //         {item}
+                //     </Card.Header>
+
+                //     <Link route={`/campaigns/${item}`}>
+                //     <a>View Campaign</a>
+                //     </Link>
+                // </Card>
             );
         })
-    //    return <div> {this.props.campaigns} </div>
         
         return (
             <MoralisProvider 
@@ -60,25 +73,7 @@ class ProfilePage extends Component {
                 </div>
             </MoralisProvider>
             )
-    }
-
-  
-    // renderCampaigns() {
-    //     const items = this.props.campaigns.map((address) => {
-    //       return {
-    //         header: address,
-    //         description: (
-    //           <Link route={`/campaigns/${address}`}>
-    //             <a>View Campaign</a>
-    //           </Link>
-    //         ),
-    //         fluid: true,
-    //       };
-    //     });
-    
-    //     return <Card.Group items={items} />;
-    // }
-   
+    } 
 }
 
 export default ProfilePage;
