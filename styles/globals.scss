@@ -143,32 +143,34 @@ p {
   justify-content: center;
   align-items: center;
   text-align: center;
+}
+/** END OF HOME */
 
-  .nav {
-    .nav-link {
-      color: #1b1a17;
-      font-size: 25px;
-      font-weight: 600;
-      padding-left: 30px;
-      padding-right: 30px;
+/** HEADER */
+.nav {
+  .nav-link {
+    color: #1b1a17;
+    font-size: 25px;
+    font-weight: 600;
+    padding-left: 30px;
+    padding-right: 30px;
 
-    }
+  }
+  
+  .vl-wrapper {
+    position: relative;
     
-    .vl-wrapper {
-      position: relative;
-      
-      .vl {
-        border-left: 6px solid green;
-        border-radius: 1rem;
-        height: 50%;
-        margin: auto 0;
-        position: absolute;
-        top: 25%;
-      }
+    .vl {
+      border-left: 6px solid green;
+      border-radius: 1rem;
+      height: 50%;
+      margin: auto 0;
+      position: absolute;
+      top: 25%;
     }
   }
 }
-/** END OF HOME */
+/** END OF HEADER */
 
 /** FAQs */
 #faq {
