@@ -15,14 +15,17 @@ export default () => {
         </Link>
       </li>
       <li className="nav-item">
+        <Link route="/#faq">
+          <a className="nav-link">FAQs</a>
+        </Link>
+      </li>
+      <li className="nav-item">
         <Link route="/#roadmap">
           <a className="nav-link">Road Map</a>
         </Link>
       </li>
-      <li className="nav-item">
-        <Link route="/#faq">
-          <a className="nav-link">FAQs</a>
-        </Link>
+      <li className="vl-wrapper">
+        <div className="vl"></div>
       </li>
       <li className="nav-item">
         <Link route="/">

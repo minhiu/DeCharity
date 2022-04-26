@@ -4,7 +4,7 @@ import ExpandableItem from "./ExpandableItem";
 class ExpandableForm extends Component {
   renderItems = () => {
     return this.props.items.map((item, index) => (
-      <ExpandableItem question={item.question} answer={item.answer} id={index} key={index} />
+      <ExpandableItem question={item.question} answer={item.answer} alignLeft={item.alignLeft} id={index} key={index} />
     ));
   };
 
