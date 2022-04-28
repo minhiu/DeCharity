@@ -1,9 +1,9 @@
 import React from "react";
-import { Link } from '../routes';
+import { Link } from "../routes";
 
-export default () => {
+const Header = () => {
   return (
-    <ul className="nav justify-content-center abs-top-50">
+    <ul className="nav justify-content-center">
       <li className="nav-item">
         <Link route="/#home">
           <a className="nav-link">Home</a>
@@ -32,11 +32,13 @@ export default () => {
           <a className="nav-link">Campaigns</a>
         </Link>
       </li>
-       <li className="nav-item">
-        <Link route="/">
+      <li className="nav-item">
+        <Link route="/profile">
           <a className="nav-link">Profile</a>
         </Link>
       </li>
     </ul>
   );
 };
+
+export default Header;

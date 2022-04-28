@@ -1,14 +1,27 @@
 import React from "react";
 import Header from "../Header";
+import Image from "next/image";
 
-export default () => {
+const Home = () => {
   return (
     <div id="home">
       <Header />
-      <h1 className="fade-in">DeCharity</h1>
-      <p className="fade-in delay-1s">
-        "a Decentralized Charity platform where everyone can Trust"
-      </p>
+      <div className="home-wrapper">
+        {/* <h1>DeCharity</h1> */}
+        <div className="pb-5">
+          <Image
+            src="/images/logo.png"
+            className="fade-in"
+            height={200}
+            width={200}
+          />
+        </div>
+        <p className="fade-in delay-1s">
+          "a Decentralized Charity platform where everyone can Trust"
+        </p>
+      </div>
     </div>
   );
 };
+
+export default Home;

@@ -3,7 +3,7 @@ import Header from "./Header";
 import Head from "next/head";
 import { Container } from "semantic-ui-react";
 
-export default (props) => {
+const Layout = (props) => {
   return (
     <Container style={{ marginTop: "10px" }}>
       <Header />
@@ -11,3 +11,5 @@ export default (props) => {
     </Container>
   );
 };
+
+export default Layout;

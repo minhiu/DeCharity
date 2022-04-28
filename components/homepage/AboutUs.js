@@ -1,7 +1,7 @@
 import React from "react";
 
-export default () => {
-  return (
+const AboutUs = () => {
+return (
     <div id="about">
       <div className="col-xl-8 col-lg-8 col-md-8 m-auto text-center pt-10 pb-10">
         <h2 className="mb-5">About Us</h2>
@@ -24,3 +24,5 @@ export default () => {
     </div>
   );
 };
+
+export default AboutUs;

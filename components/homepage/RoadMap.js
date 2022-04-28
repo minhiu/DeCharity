@@ -1,10 +1,9 @@
 import React from "react";
-
-export default () => {
+const RoadMap = () => {
   return (
     <div id="roadmap">
       <div className="col-xl-8 col-lg-8 col-md-8 m-auto text-center pt-10 pb-10">
-        <h1 className="mb-5">Road Map</h1>
+        <h2 className="mb-5">Road Map</h2>
         <div className="point">
           <div className="point-index">1</div>
           <div className="point-label">Q4/2021 - Planning Phase</div>
@@ -37,3 +36,5 @@ export default () => {
     </div>
   );
 };
+
+export default RoadMap;

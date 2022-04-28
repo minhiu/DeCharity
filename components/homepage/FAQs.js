@@ -1,7 +1,7 @@
 import react from "react";
 import ExpandableForm from "../ExpandableForm";
 
-export default () => {
+const FAQs = () => {
   const faqs = [
     {
       question: "What is the goal of DeCharity?",
@@ -83,3 +83,5 @@ export default () => {
     </div>
   );
 };
+
+export default FAQs;

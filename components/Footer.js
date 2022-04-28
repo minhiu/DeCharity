@@ -1,11 +1,12 @@
 import React from "react";
-import Image from "next/image"
+import Image from "next/image";
 
-export default () => {
-    return (
-        <div id="footer" class="pt-3 pb-3">
-            <Image src="/images/logo.png" width="50" height="50" />
-            <div>© 2022 DeCharity </div>
-        </div>
-    )
-}
+const Footer = (props) => {
+  return (
+    <div id="footer" className="pt-3 pb-3" style={{ backgroundColor: props.backgroundColor }}>
+      <div style={{ color: props.color }}>© 2022 DeCharity </div>
+    </div>
+  );
+};
+
+export default Footer;

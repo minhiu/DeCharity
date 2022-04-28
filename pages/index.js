@@ -31,15 +31,13 @@ class CampaignIndex extends Component {
   }
 
   render() {
-    
-
     return (
       <>
         <Home />
         <AboutUs />
         <FAQs />
         <RoadMap />
-        <Footer />
+        <Footer backgroundColor={"#393e46"} color={"#fff"} />
       </>
     );
   }
