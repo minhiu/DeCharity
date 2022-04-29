@@ -47,14 +47,19 @@ contract Campaign {
         mapping(address => bool) approvedAddress; // Map of address to boolean to determine if address approved
     }
 
+
     Request[] public requests; // Array of all requests from current Contract
     address public manager; // Address of Contract Creator
     uint public minimumContribution; // Minimum Ether Value a contributor needs to donate to become an approver
     mapping(address => bool) public contributors; // Map to keep track who has donated (No minimum value required)
     mapping(address => bool) public approvers; // Map to keep track who has donated above the minimum and became approvers
     mapping(address => uint) public balances; // Map to keep track how much an user has donated to the campaign
+    address[] public donors; //List of all of the donor adresses.
     uint public contributorsCount; // Count of all contributors
     uint public approversCount; // Count of all approvers
+    uint public minimumFunds; //The minimum required funds to start a campaign.
+    string public campaignName; //The name of the campaign
+    string public campaignDescription; //A text description of the campaign.
 
     /** Modifier that requires manager privilege */
     modifier restricted() {
@@ -86,6 +91,7 @@ contract Campaign {
         // Count number of contributors (distinctively)
         if (!contributors[msg.sender]) {
             contributors[msg.sender] = true;
+            donors.push(msg.sender);
             contributorsCount++;
         }
         
@@ -93,6 +99,39 @@ contract Campaign {
         balances[msg.sender] += msg.value;
     }
 
+
+    function totalContributions() public returns (uint){
+
+    }
+    /** Function to get percentage contribution of the address compared to the whole pot */
+    function percentContribution() public returns (uint, uint){
+        return (0,0);
+    }
+
+    /** Function to check if the current donated balances are greater than the minimum funds to start */
+    modifier checkCanStart() {
+        uint index = 0;
+        uint fundSum = 0;
+        for(index = 0;index < donors.length; index+=1){
+            fundSum+= balances[donors[index]];
+        }
+        require (fundSum >= minimumFunds);
+        _;
+    }
+    /** Function to check first phase and divest funds based on continuing or stopping. */
+    function finalizeStart() public checkCanStart {
+        require(requests.length > 0);
+        Request storage request = requests[0];
+        require(!request.completed);
+        if (request.approvalCount > (request.totalVoteCount / 2)) {
+            request.recipient.transfer(request.value);
+            request.isApproved = true;
+        } else {
+            request.isApproved = false;
+        }
+        request.completed = true;
+        //TODO FINISH
+    }
     /** Function to let user becomes an approver */
     function becomeApprover() public contributionCheck {
         // Count number of approvers (distinctively)
@@ -130,6 +169,16 @@ contract Campaign {
         request.totalVoteCount++;
     }
 
+    /** Function to set the name of the campaign */
+    function setCampaignName(string calldata  campName) public {
+        require(msg.sender == manager);
+        campaignName = campName;
+    }
+    /** Function to set the name of the campaign */
+    function setCampaignDescription(string calldata  campDesc) public {
+        require(msg.sender == manager);
+        campaignDescription = campDesc;
+    }
     /** Function to reject the vote of the request */
     function rejectRequest(uint index) public {
         Request storage request = requests[index];
