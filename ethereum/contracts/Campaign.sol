@@ -100,12 +100,20 @@ contract Campaign {
     }
 
 
-    function totalContributions() public returns (uint){
-
+    function totalContributions() public view returns (uint){
+        uint index = 0;
+        uint fundSum = 0;
+        for(index = 0;index < donors.length; index+=1){
+            fundSum+= balances[donors[index]];
+        }
+        return fundSum;
     }
     /** Function to get percentage contribution of the address compared to the whole pot */
-    function percentContribution() public returns (uint, uint){
-        return (0,0);
+    function percentContribution(address contributor) public view returns (uint, uint){
+        require(contributors[contributor]);
+        uint totalCont = totalContributions();
+        return (balances[contributor], totalCont);
+
     }
 
     /** Function to check if the current donated balances are greater than the minimum funds to start */
