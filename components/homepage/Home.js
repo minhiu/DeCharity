@@ -2,12 +2,11 @@ import React from "react";
 import Header from "../Header";
 import Image from "next/image";
 
-const Home = () => {
+const Home = (props) => {
   return (
     <div id="home">
       <Header />
       <div className="home-wrapper">
-        {/* <h1>DeCharity</h1> */}
         <div className="pb-5">
           <Image
             src="/images/logo.png"

@@ -1,9 +1,9 @@
 import Head from "next/head";
-import "../styles/globals.scss";
 import React, { useState, useEffect } from "react";
-import { css } from "@emotion/react";
 import ClipLoader from "react-spinners/ClipLoader";
 import { useRouter } from "next/router";
+import "../styles/globals.scss";
+import 'react-notifications/lib/notifications.css';
 
 const Application = ({ Component, pageProps }) => {
   const router = useRouter(),
@@ -28,6 +28,7 @@ const Application = ({ Component, pageProps }) => {
       ) : (
         <React.Fragment>
           <Head>
+            <link rel="icon" href="/favicon.ico" />
             <link
               rel="stylesheet"
               href="https://cdn.jsdelivr.net/npm/semantic-ui@2/dist/semantic.min.css"
