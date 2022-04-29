@@ -8,6 +8,7 @@ import { Router, Link } from '../../routes';
 import { ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 const Moralis = require('moralis');
+const util = require('util');
 
 class CampaignShow extends Component {
   static async getInitialProps(props) {
@@ -34,9 +35,6 @@ class CampaignShow extends Component {
 
   async componentDidMount() {
     this.accounts = await web3.eth.getAccounts();
-    console.log(Moralis);
-    console.log(Moralis.User);
-    console.log(Moralis.File);
     const getPhoto = async (address) => {
       const serverUrl = "https://v8fuoirhamw1.usemoralis.com:2053/server";
       const appId = "oiT6sgUAkVpbXNHatAuoB0r9dpwjK0qR5rfFVF4z";
