@@ -11,8 +11,8 @@ contract CampaignFactory {
     IERC20 token = IERC20(0xa896B25da9d40F486C8917E184C3CB0d6B91adda);
 
     /** Create a new campaign */
-    function createCampaign(uint minimum) public {
-        address newCampaign = address(new Campaign(minimum, msg.sender, token));
+    function createCampaign(string memory name,string memory description,string memory stringCategory,  uint minimum, uint fundGoal) public {
+        address newCampaign = address(new Campaign(name, description, stringCategory, minimum, fundGoal,msg.sender, token));
         deployedCampaigns.push(newCampaign);
     }
 
@@ -35,6 +35,7 @@ contract Campaign {
 
     /** Request struct for each Campaign */
     struct Request {
+        string status; // Status of the request
         string description; // Description of request
         uint value; // Total amount of money needed for this request
         address payable recipient; // Recipient of the value
@@ -54,12 +55,16 @@ contract Campaign {
     mapping(address => bool) public contributors; // Map to keep track who has donated (No minimum value required)
     mapping(address => bool) public approvers; // Map to keep track who has donated above the minimum and became approvers
     mapping(address => uint) public balances; // Map to keep track how much an user has donated to the campaign
+    mapping(address => bool) public refunded; // Map to keep track if an user has been refunded
     address[] public donors; //List of all of the donor adresses.
     uint public contributorsCount; // Count of all contributors
     uint public approversCount; // Count of all approvers
-    uint public minimumFunds; //The minimum required funds to start a campaign.
+    uint public fundingGoal; //The minimum required funds to start a campaign.
     string public campaignName; //The name of the campaign
     string public campaignDescription; //A text description of the campaign.
+    enum category { DEFAULT ,MEDICAL, EMERGENCY, NONPROFIT, FINANCIAL, ANIMAL, ENVIRONMENT, EVENT }//The category of the campaign.
+    category public campaignCategory; //The category of the campaign.
+    uint public deadline; //The deadline of the campaign.
 
     /** Modifier that requires manager privilege */
     modifier restricted() {
@@ -80,10 +85,43 @@ contract Campaign {
     }
 
     /** Contract Constructor */
-    constructor (uint minimum, address creator, IERC20 token) {
+    constructor (string memory name,string memory description,string memory stringCategory,  uint minimum, uint fundGoal,address creator, IERC20 token) {
+        campaignName = name;
+        campaignCategory = stringToCategory(stringCategory);
+        campaignDescription = description;
         manager = creator;
         minimumContribution = minimum;
         _token = token;
+        contributorsCount =0;
+        approversCount =0;
+        fundingGoal = fundGoal;
+        deadline = block.timestamp + 45 days;
+    }
+    /** convert string representation of category to category enum*/
+    function stringToCategory(string memory input) public pure returns (category) {
+        if (keccak256(bytes(input)) == keccak256(bytes("default"))) return category.DEFAULT;
+        if (keccak256(bytes(input)) == keccak256(bytes("medical"))) return category.MEDICAL;
+        if (keccak256(bytes(input)) == keccak256(bytes("emergency"))) return category.EMERGENCY;
+        if (keccak256(bytes(input)) == keccak256(bytes("nonprofit"))) return category.NONPROFIT;
+        if (keccak256(bytes(input)) == keccak256(bytes("financial"))) return category.FINANCIAL;
+        if (keccak256(bytes(input)) == keccak256(bytes("animal"))) return category.ANIMAL;
+        if (keccak256(bytes(input)) == keccak256(bytes("environment"))) return category.ENVIRONMENT;
+        if (keccak256(bytes(input)) == keccak256(bytes("event"))) return category.EVENT;
+        return category.DEFAULT;
+
+    }
+
+    /** get this campaigns category as a string. */
+    function getCategory() public view returns (string memory) {
+        if (campaignCategory == category.DEFAULT) return "default";
+        if (campaignCategory == category.MEDICAL) return "medical";
+        if (campaignCategory == category.EMERGENCY) return "emergency";
+        if (campaignCategory == category.NONPROFIT) return "nonprofit";
+        if (campaignCategory == category.FINANCIAL) return "financial";
+        if (campaignCategory == category.ANIMAL) return "animal";
+        if (campaignCategory == category.ENVIRONMENT) return "environment";
+        if (campaignCategory == category.EVENT) return "event";
+        return "default";
     }
 
     /** Function to let users contribute (no minimum) */
@@ -100,46 +138,26 @@ contract Campaign {
     }
 
 
-    function totalContributions() public view returns (uint){
-        uint index = 0;
-        uint fundSum = 0;
-        for(index = 0;index < donors.length; index+=1){
-            fundSum+= balances[donors[index]];
-        }
-        return fundSum;
-    }
-    /** Function to get percentage contribution of the address compared to the whole pot */
-    function percentContribution(address contributor) public view returns (uint, uint){
-        require(contributors[contributor]);
-        uint totalCont = totalContributions();
-        return (balances[contributor], totalCont);
+    
 
+    /** Function to return the next phase to be voted on minimum is 2 maximum is 4 */
+    function getNextVotingPhase() public view returns (uint) {
+        require(requests.length > 0);
+        uint phase = 0;
+        for (uint i = 0; i < requests.length; i++) {
+            if (requests[i].completed == false) {
+                phase = i+1;
+                break;
+            }
+        }
+
+        return phase;
     }
+    
 
     /** Function to check if the current donated balances are greater than the minimum funds to start */
-    modifier checkCanStart() {
-        uint index = 0;
-        uint fundSum = 0;
-        for(index = 0;index < donors.length; index+=1){
-            fundSum+= balances[donors[index]];
-        }
-        require (fundSum >= minimumFunds);
-        _;
-    }
-    /** Function to check first phase and divest funds based on continuing or stopping. */
-    function finalizeStart() public checkCanStart {
-        require(requests.length > 0);
-        Request storage request = requests[0];
-        require(!request.completed);
-        if (request.approvalCount > (request.totalVoteCount / 2)) {
-            request.recipient.transfer(request.value);
-            request.isApproved = true;
-        } else {
-            request.isApproved = false;
-        }
-        request.completed = true;
-        //TODO FINISH
-    }
+    
+    
     /** Function to let user becomes an approver */
     function becomeApprover() public contributionCheck {
         // Count number of approvers (distinctively)
@@ -150,17 +168,22 @@ contract Campaign {
     }
 
     /** Function to create a request for the current campaign by the manager */
-    function createRequest(string memory description, uint value, address payable recipient) public restricted {
-        Request storage newRequest = requests.push();
+    function createRequests(string[] memory descriptions, address payable[] memory recipients) restricted public {
+        // Iterate through the descriptions reciepients and create a request for each by pushing them to the requests array
+        for (uint256 index = 0; index < descriptions.length; index++) {
+            Request storage newRequest = requests.push();
+            newRequest.expirationDate = block.timestamp + (15 days)*(index+1);
+            newRequest.description = descriptions[index];
+            newRequest.recipient = recipients[index];
+            newRequest.completed = false;
+            newRequest.isApproved = false;
+            newRequest.approvalCount = 0;
+            newRequest.totalVoteCount = 0;
+            newRequest.status = "not-started";
+            
 
-        newRequest.description = description;
-        newRequest.value = value;
-        newRequest.recipient = recipient;
-        newRequest.completed = false;
-        newRequest.isApproved = false;
-        newRequest.approvalCount = 0;
-        newRequest.totalVoteCount = 0;
-        newRequest.expirationDate = (block.timestamp + 15 days);
+        }
+        
     }
 
     /** Function to approve the vote of the request */
@@ -169,6 +192,7 @@ contract Campaign {
 
         // Require user to be an approver and not yet voted
         require(approvers[msg.sender]);
+        require(!request.completed);
         require(!request.votedAddresses[msg.sender]);
 
         request.votedAddresses[msg.sender] = true;
@@ -196,9 +220,26 @@ contract Campaign {
         require(!request.votedAddresses[msg.sender]);
 
         request.votedAddresses[msg.sender] = true;
-        request.approvedAddress[msg.sender] = false;
         request.totalVoteCount++;
     }
+    /** Function to finalize the first request that skips a vote. */
+    function finalizeFirstRequest() public  requestExpirationDateCheck(1) {
+        //Create check for minimum funds needing to be met to finalize requests.
+        uint256 fundSum = 0;
+        for (uint256 i = 0; i < donors.length; i++) {
+            fundSum += balances[donors[i]];
+        }
+        require(fundSum >= fundingGoal);
+        Request storage request = requests[1];
+        request.recipient.transfer(request.value);
+        request.isApproved = true;
+        request.completed = true;
+        request.status = "approved";
+        _token.transfer(msg.sender, 10);
+        emit Transaction(msg.sender);
+
+    }
+
 
     /** 
       * Function to finalize the request to see the outcome of the request
@@ -207,13 +248,21 @@ contract Campaign {
       */
     function finalizeRequest(uint index) public requestExpirationDateCheck(index) {
         Request storage request = requests[index];
-
+        //First request is handled elsewhere
+        require(index>0);
+        
+        
         require(!request.completed);
         if (request.approvalCount > (request.totalVoteCount / 2)) {
             request.recipient.transfer(request.value);
             request.isApproved = true;
+            request.status = "approved";
         } else {
-            request.isApproved = false;
+            for (uint256 j = index; j < requests.length; j++) {
+                requests[j].isApproved = false;
+                requests[j].completed = false;
+                requests[j].status = "rejected";
+            }
         }
         request.completed = true;
 
@@ -239,6 +288,21 @@ contract Campaign {
             }
         emit Transaction(msg.sender);
     }
+    // With a bunch of other book keeping elsewhere in the code this function will return the status of a phase correctly.
+    // A request status is just it's status unless the current date is within 15 days of the request's expiration date.
+    // And if the request has not yet been finalized.
+    function getPhaseStatus(uint index) public view returns (string memory) {
+        Request storage request = requests[index];
+        // We check if the current date is within 15 days of the request's expiration date but not after it's expiration date.
+        if (request.expirationDate - block.timestamp < 15 days && request.expirationDate - block.timestamp > 0) {
+            // Then if the request has not been finalized that means people are currently voting on it.
+            if (request.completed) {
+                return "validating";
+            }
+        }
+        //Otherwise it is just the request's status.
+        return request.status;
+    }
 
     /** Get basic, unbiased information of the campaign */
     function getSummary() public view returns (
@@ -253,10 +317,51 @@ contract Campaign {
             manager
         );
     }
-
+    
     /** Return total number of requests inside a campaign */
     function getRequestsCount() public view returns (uint) {
         return requests.length;
+    }
+    /** Issue refund to the function caller */
+    function issueRefund(address payable refundee) public payable {
+        uint256 fundSum = 0;
+        for (uint256 i = 0; i < donors.length; i++) {
+            fundSum += balances[donors[i]];
+        }
+        // If we are currently past the dead line and their is not enough funds we can refund the entire balance
+        if (block.timestamp > deadline && fundSum < fundingGoal) {
+            refundee.transfer(balances[refundee]);
+            balances[refundee] = 0;
+            refunded[refundee] = true;
+            return;
+        }
+
+        // If that is not the case we only refund if the campaign has ended.
+        // IF the campaign has ended that means their must be 4 phases in the requests array
+        require(requests.length == 4);
+        // If the campaign has ended that means the last request must be completed.
+        require(requests[3].completed);
+
+        // At this point the campaign has ended so we can go ahead and calculate if they get a refund and refund them if they do.
+
+        //We get the number of approved requests
+        uint numApproved = 0;
+        for (uint256 i = 0; i < requests.length; i++) {
+            if (requests[i].isApproved) {
+                numApproved++;
+            }
+        }
+        //We calculate the fraction that should be reunded back to the requester
+        uint fractionRefund = 1 - (numApproved / 4);
+        //We calculate the amount that should be refunded
+        uint refundAmount = (balances[refundee] * fractionRefund);
+        //We refund the requester
+        refundee.transfer(refundAmount);
+        //We update the balance of the requester
+        balances[refundee] = balances[refundee] - refundAmount;
+        //We update the refunded array
+        refunded[refundee] = true;
+
     }
 }
 
