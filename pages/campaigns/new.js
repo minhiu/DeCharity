@@ -72,10 +72,10 @@ class NewCampaign extends Component {
                 tabindex="0"
                 onClick={() => Router.back()}
               >
-                <div class="hidden content">Back</div>
-                <div class="visible content">
-                  <i class="large arrow alternate circle left icon"></i>
+                <div class="hidden content">
+                  <i class="arrow alternate circle left icon"></i>
                 </div>
+                <div class="visible content">Back</div>
               </div>
             </div>
             <Form onSubmit={this.onSubmit} error={!!this.state.errorMessage}>

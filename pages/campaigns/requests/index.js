@@ -53,10 +53,10 @@ class RequestIndex extends Component {
                 tabindex="0"
                 onClick={() => Router.back()}
               >
-                <div class="hidden content">Back</div>
-                <div class="visible content">
-                  <i class="large arrow alternate circle left icon"></i>
+                <div class="hidden content">
+                  <i class="arrow alternate circle left icon"></i>
                 </div>
+                <div class="visible content">Back</div>
               </div>
             </div>
             {/* <Link route={`/campaigns/${this.props.address}/requests/new`}>
