@@ -32,6 +32,7 @@ class Profile extends Component {
     let totalDonated = 0;
 
     for (const address of this.props.campaigns) {
+      console.log(address);
       const campaign = Campaign(address);
       const hasDonated = await campaign.methods
         .contributors(this.state.account)
@@ -64,7 +65,7 @@ class Profile extends Component {
       return (
         <Card
           img="/images/background-campaign.jpg"
-          title={item.address}
+          address={item.address}
           valueDonated={item.value}
           key={index}
         />
@@ -75,7 +76,7 @@ class Profile extends Component {
   render() {
     return (
       <>
-        <div id="profile">
+        <div className="main-container">
           <Header />
           <div className="text-center pt-10 pb-10">
             <Image src="/images/logo.png" height={100} width={100} />
