@@ -367,12 +367,17 @@ contract Campaign {
         public
         view
         returns (
-            uint256,
-            uint256,
-            uint256,
-            uint256,
-            uint256,
-            address
+            uint256, //Minimum contributions
+            uint256, //Campaign Balance
+            uint256, //Number of phases
+            uint256, //Contributors Count
+            uint256, //Approvers Count
+            address, //Manager
+            string memory, //Campaign Name
+            string memory, //Campaign Description
+            string memory, //Campaign Status
+            uint256, //Campaign Goal
+            uint256 //Campaign deadline
         )
     {
         return (
@@ -381,7 +386,12 @@ contract Campaign {
             requests.length,
             contributorsCount,
             approversCount,
-            manager
+            manager,
+            campaignName,
+            campaignDescription,
+            getCategory(),
+            fundingGoal,
+            deadline
         );
     }
 
