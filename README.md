@@ -37,33 +37,3 @@
   <li>components - contains all Layout components</li>
   <li>pages - contains all directories of the website</li>
 </ul>
-
-<h2>Implementing Notifications</h2>
-<p>1. Importing react-toastify</p>
-<ul>
-  <li>Add the lines import { ToastContainer, toast} from 'react-toastify'; and import 'react-toastify/dist/ReactToastify.css'; to the top of the file in which notifications are desired.</li>
-</ul>
-
-<p>2. Declaration and customization of notifications</p>
-<ul>
-  <li>react-toastify requires a container called ToastContainer in order to specify certain information about the notifications</li>
-  <li>The following example is a ToastContainer that is declared within the main render function of a given page:
-      <>
-        <ToastContainer
-        position="top-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        />
-      </>
-  </li>
-  <li>As we can see, there are many elements of the notifications that can be adjusted, and some of these are already enabled by default</li>
-  <li>A single toast notification can be declared such that: const exampleNotification = () => {toast("example notification")};</li>
-  <li>If desired, you could show different types of notifications by replacing toast with toast.info, toast.success, toast.warn, and toast.error while toast is just the default notification</li>
-</ul>
-

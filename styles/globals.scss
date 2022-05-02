@@ -452,6 +452,7 @@ td {
 
 /** REQUESTS */
 #requests,
+#new-requests,
 #new-campaign {
   .wrapper {
     width: min(100% - 20rem);
@@ -467,6 +468,18 @@ td {
   }
 }
 /** END OF REQUESTS */
+
+/** DROPDOWN FILTER */
+.dropdown-filter {
+  width: 50% !important;
+  margin-inline: auto;
+  
+  a {
+    text-decoration: none;
+  }
+}
+/** END OF DROPDOWN FILTER */
+
 /** FOOTER */
 #footer {
   width: 100%;

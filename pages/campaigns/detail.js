@@ -134,14 +134,14 @@ class CampaignShow extends Component {
                 </Grid.Column>
               </Grid.Row>
               <div
-                class="ui vertical animated button back-btn"
-                tabindex="0"
+                className="ui vertical animated button back-btn"
+                tabIndex="0"
                 onClick={() => Router.back()}
               >
-                <div class="hidden content">
-                  <i class="arrow alternate circle left icon"></i>
+                <div className="hidden content">
+                  <i className="arrow alternate circle left icon"></i>
                 </div>
-                <div class="visible content">Back</div>
+                <div className="visible content">Back</div>
               </div>
             </div>
             <div className="campaign-info">

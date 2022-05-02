@@ -48,24 +48,24 @@ class RequestIndex extends Component {
             <div className="text-center mt-10 mb-5 position-relative">
               <Image src="/images/logo.png" height={100} width={100} />
               <h2>Requests</h2>
+              <Link route={`/campaigns/${this.props.address}/requests/new`}>
+                <a>
+                  <Button primary className="mt-5">
+                    Add Requests
+                  </Button>
+                </a>
+              </Link>
               <div
-                class="ui vertical animated button back-btn"
-                tabindex="0"
+                className="ui vertical animated button back-btn"
+                tabIndex="0"
                 onClick={() => Router.back()}
               >
-                <div class="hidden content">
-                  <i class="arrow alternate circle left icon"></i>
+                <div className="hidden content">
+                  <i className="arrow alternate circle left icon"></i>
                 </div>
-                <div class="visible content">Back</div>
+                <div className="visible content">Back</div>
               </div>
             </div>
-            {/* <Link route={`/campaigns/${this.props.address}/requests/new`}>
-              <a>
-                <Button primary floated="right" style={{ marginBottom: 10 }}>
-                  Add Request
-                </Button>
-              </a>
-            </Link> */}
             <Table>
               <Header>
                 <Row>

@@ -27,13 +27,16 @@ class Profile extends Component {
       this.setState({ loadingDonatedCampaigns: false });
   };
 
+  componentWillUnmount = () => {
+    this.setState({ account: "" });
+  }
+
   getDonatedCampaigns = async () => {
     const donatedCampaigns = [];
     let totalDonated = 0;
 
     for (const address of this.props.campaigns) {
-      console.log(address);
-      const campaign = Campaign(address);
+      const campaign = await Campaign(address);
       const hasDonated = await campaign.methods
         .contributors(this.state.account)
         .call();

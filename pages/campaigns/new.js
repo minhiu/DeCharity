@@ -6,6 +6,7 @@ import { Router } from "../../routes";
 import Image from "next/image";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
+import { categories } from "../../constants/categories";
 
 class NewCampaign extends Component {
   state = {
@@ -49,16 +50,6 @@ class NewCampaign extends Component {
   };
 
   render() {
-    const categories = [
-      { key: "m", text: "Medical", value: "medical" },
-      { key: "e", text: "Emergency", value: "emergency" },
-      { key: "n", text: "Non-Profit", value: "nonprofit" },
-      { key: "f", text: "Financial", value: "financial" },
-      { key: "a", text: "Animal", value: "animal" },
-      { text: "Environment", value: "environment" },
-      { text: "Event", value: "event" },
-    ];
-
     return (
       <>
         <div id="new-campaign" className="main-container">
@@ -68,14 +59,14 @@ class NewCampaign extends Component {
               <Image src="/images/logo.png" height={100} width={100} />
               <h2>Create a Campaign</h2>
               <div
-                class="ui vertical animated button back-btn"
-                tabindex="0"
+                className="ui vertical animated button back-btn"
+                tabIndex="0"
                 onClick={() => Router.back()}
               >
-                <div class="hidden content">
-                  <i class="arrow alternate circle left icon"></i>
+                <div className="hidden content">
+                  <i className="arrow alternate circle left icon"></i>
                 </div>
-                <div class="visible content">Back</div>
+                <div className="visible content">Back</div>
               </div>
             </div>
             <Form onSubmit={this.onSubmit} error={!!this.state.errorMessage}>
