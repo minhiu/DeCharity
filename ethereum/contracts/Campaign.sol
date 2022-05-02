@@ -47,14 +47,23 @@ contract Campaign {
         mapping(address => bool) approvedAddress; // Map of address to boolean to determine if address approved
     }
 
-    Request[] public requests; // Array of all requests from current Contract
+    string public campaignName; // Campaign name
+    string public campaignDescription; // Campaign description (includes 4 phase details and twitter)
+    enum Category { MEDICAL, EMERGENCY, NONPROFIT, FINANCIAL, ANIMAL, ENVIRONMENT, EVENT }; // Enum for filtering campaigns based on category
+    Category public campaignCategory;
+    uint public goalFund;  // Goal amount a campaign is seeking for donation
+    Request[] public requests; // Array of all requests from current Contract, maximum 4 allowed per campaign.
     address public manager; // Address of Contract Creator
     uint public minimumContribution; // Minimum Ether Value a contributor needs to donate to become an approver
     mapping(address => bool) public contributors; // Map to keep track who has donated (No minimum value required)
     mapping(address => bool) public approvers; // Map to keep track who has donated above the minimum and became approvers
     mapping(address => uint) public balances; // Map to keep track how much an user has donated to the campaign
+    mapping(address => bool) public refunded;   // Mapping that specifies which contributors(address) have been refunded
     uint public contributorsCount; // Count of all contributors
     uint public approversCount; // Count of all approvers
+    uint public campaignStartDate;
+    uint public campaignDeadline;   //deadline Campaign has to raise goal fund
+    
 
     /** Modifier that requires manager privilege */
     modifier restricted() {
@@ -74,11 +83,18 @@ contract Campaign {
         _;
     }
 
+
     /** Contract Constructor */
-    constructor (uint minimum, address creator, IERC20 token) {
-        manager = creator;
+    constructor (string name, string description, Category category, uint minimum, uint goal,  address creator, IERC20 token) {
+        campaignName = name;
+        campaignDescription = description;
+        campaignCategory = category;
         minimumContribution = minimum;
+        goalFund = goal;
+        manager = creator;
         _token = token;
+        campaignStartDate = (block.timestamp);
+        campaignDeadline = (block.timestamp + 45 days );
     }
 
     /** Function to let users contribute (no minimum) */
@@ -157,6 +173,7 @@ contract Campaign {
             request.isApproved = true;
         } else {
             request.isApproved = false;
+
         }
         request.completed = true;
 
@@ -201,6 +218,58 @@ contract Campaign {
     function getRequestsCount() public view returns (uint) {
         return requests.length;
     }
+
+    /** Issues calculated refund to all contributors
+     *  when campaign has been deemed unsuccessful
+     */
+    function issueRefund() {
+        // require last request to be finalized OR campaign did not reach contribution by deadline
+        require(request[3].completed | ((campaignStartDate >= campaignDeadline) & (address(this).balance < goalFund)));
+        // requires user requesting refund to be a contributor
+        require(contributors[msg.sender]);
+        //requires contributor to not have been refunded already 
+        require(!refunded[msg.sender]);
+
+        uint balanceRefunded = 0;
+        uint numValidRequests = 0;
+
+        // Loop to see how many of the requests are valid
+        for( uint i = 0; i < requests.length; i++ ) {
+            if(request[i].isApproved) {
+                numValidRequests++;
+            }
+        }
+
+        // if only 1 request was found to be valid, issue 75% of contributor's donation
+        if(numValidRequests == 1) {
+            balanceRefunded = balances[msg.sender] * 0.75;
+            balances[msg.sender] -= balanceRefunded;
+            msg.sender.transfer(balanceRefunded);
+            refunded[msg.sender] = true;
+        }
+        // if 2 requests was found to be valid, issue 50% of contributor's donation
+        else if(numValidRequests == 2) {
+            balanceRefunded = balances[msg.sender] * 0.50;
+            balances[msg.sender] -= balanceRefunded;
+            msg.sender.transfer(balanceRefunded);
+            refunded[msg.sender] = true;
+        }
+        // if only 3 requests was found to be valid, issue 25% of contributor's donation
+        else if(numValidRequests == 3) {
+            balanceRefunded = balances[msg.sender] * 0.25;
+            balances[msg.sender] -= balanceRefunded;
+            msg.sender.transfer(balanceRefunded);
+            refunded[msg.sender] = true;
+        }
+        // if contributor gets 100% of balance refunded
+        else {
+            balanceRefunded = balances[msg.sender];
+            balances[msg.sender] -= balanceRefunded;
+            msg.sender.transfer(balanceRefunded);
+            refunded[msg.sender] = true;
+        }
+    }   
+
 }
 
 // TODO Implement tokens retrieval for unsuccessful campagin
