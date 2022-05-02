@@ -171,7 +171,9 @@ contract Campaign {
 
     /** Function to let users contribute (no minimum) */
     function contribute() public payable {
+        
         require(requests.length == 4);
+        require(!requests[0].completed);
         // Count number of contributors (distinctively)
         if (!contributors[msg.sender]) {
             contributors[msg.sender] = true;
@@ -184,19 +186,7 @@ contract Campaign {
         startingFunds += msg.value;
     }
 
-    /** Function to return the next phase to be voted on minimum is 2 maximum is 4 */
-    function getNextVotingPhase() public view returns (uint256) {
-        require(requests.length > 0);
-        uint256 phase = 0;
-        for (uint256 i = 0; i < requests.length; i++) {
-            if (requests[i].completed == false) {
-                phase = i + 1;
-                break;
-            }
-        }
-
-        return phase;
-    }
+    
 
     /** Function to check if the current donated balances are greater than the minimum funds to start */
 
@@ -301,7 +291,8 @@ contract Campaign {
         Request storage request = requests[index];
         //First request is handled elsewhere
         require(index > 0);
-
+        uint votingPhase = getNextVotingPhase();
+        require(votingPhase == index+1);
         require(!request.completed);
         if (request.approvalCount > (request.totalVoteCount / 2)) {
             request.isApproved = true;
@@ -343,20 +334,33 @@ contract Campaign {
         emit Transaction(msg.sender);
     }
 
+    /** Function to return the next phase to be voted on minimum is 2 maximum is 4 */
+    function getNextVotingPhase() public view returns (uint256) {
+        require(requests.length > 3);
+        uint256 phase = 0;
+        for (uint256 i = 0; i < requests.length; i++) {
+            if (requests[i].completed == false) {
+                phase = i + 1;
+                break;
+            }
+        }
+        return phase;
+    }
+
+
     // With a bunch of other book keeping elsewhere in the code this function will return the status of a phase correctly.
     // A request status is just it's status unless the current date is within 15 days of the request's expiration date.
     // And if the request has not yet been finalized.
     function getPhaseStatus(uint256 index) public view returns (string memory) {
         Request storage request = requests[index];
-        // We check if the current date is within 15 days of the request's expiration date but not after it's expiration date.
+        require(requests.length > index);
+        uint256 phase = getNextVotingPhase();
+        
+        // We check if the phase we are checking is the next phase to be voted.
         if (
-            request.expirationDate - block.timestamp < 15 days &&
-            request.expirationDate - block.timestamp > 0
+            phase - 1 == index
         ) {
-            // Then if the request has not been finalized that means people are currently voting on it.
-            if (!request.completed) {
-                return "validating";
-            }
+            return "validating";
         }
         //Otherwise it is just the request's status.
         return request.status;
