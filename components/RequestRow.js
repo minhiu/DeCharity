@@ -88,7 +88,7 @@ class RequestRow extends Component {
     // const readyToFinalize = request.approvalCount > request.totalVoteCount / 2;
     const value =
       request.value == 0
-        ? web3.utils.fromWei(campaignBalance / 4, "ether")
+        ? web3.utils.fromWei(String(campaignBalance / 4), "ether")
         : web3.utils.fromWei(request.value, "ether");
     return (
       <Row
