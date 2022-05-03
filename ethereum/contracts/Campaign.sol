@@ -73,9 +73,11 @@ contract Campaign {
     address[] public donors; //List of all of the donor adresses.
     uint256 public contributorsCount; // Count of all contributors
     uint256 public approversCount; // Count of all approvers
-    uint256 public fundingGoal; //The minimum required funds to start a campaign.
-    string public campaignName; //The name of the campaign
-    string public campaignDescription; //A text description of the campaign.
+    uint256 public fundingGoal; // The minimum required funds to start a campaign.
+    string public campaignName; // The name of the campaign
+    string public campaignDescription; // A text description of the campaign.
+    bool public isRejected; // Indicate if a this campaign is rejected
+
     enum category {
         DEFAULT,
         MEDICAL,
@@ -129,6 +131,7 @@ contract Campaign {
         manager = creator;
         deadline = block.timestamp + 45 days;
         startingFunds = 0;
+        isRejected = false;
     }
 
         /** Function to set the name of the campaign */
@@ -252,6 +255,7 @@ contract Campaign {
         Request storage request = requests[index];
 
         // Require user to be an approver and not yet voted
+        require(index != 0); // Can't validate first request
         require(approvers[msg.sender]);
         require(!request.completed);
         require(!request.votedAddresses[msg.sender]);
@@ -267,8 +271,11 @@ contract Campaign {
         Request storage request = requests[index];
 
         // Require user to be an approver and not yet voted
+        require(index != 0); // Can't validate first request
         require(approvers[msg.sender]);
         require(!request.votedAddresses[msg.sender]);
+
+        isRejected = true;
 
         request.votedAddresses[msg.sender] = true;
         request.totalVoteCount++;
@@ -276,13 +283,24 @@ contract Campaign {
 
     /** Function to finalize the first request that skips a vote. */
     function finalizeFirstRequest() public {
+        // If we are currently past the dead line and their is not enough funds we can refund the entire balance
+        if (block.timestamp > deadline && startingFunds < fundingGoal) {
+            isRejected = true;
+            for (uint256 j = 0; j < requests.length; j++) {
+                requests[j].isApproved = false;
+                requests[j].completed = true;
+                requests[j].status = "rejected";
+            }
+        }
         //Require that request has not been finalized
-        require(!requests[0].completed);
         require(startingFunds >= fundingGoal);
+        require(!requests[0].completed);
         // Set value for all requests since we know for certain by this time
         for (uint256 i = 0; i < 4; i++) {
             requests[i].value = getBalance() / 4;
         }
+        uint votingPhase = getNextVotingPhase();
+        requests[votingPhase].status = "validating";
         // Finalize the first request directly without a vote by setting the completed flag to true
         // and approving it and transferring funds to the recipient
         Request storage request = requests[0];
@@ -363,7 +381,7 @@ contract Campaign {
             address, //Manager
             string memory, //Campaign Name
             string memory, //Campaign Description
-            string memory, //Campaign Status
+            string memory, //Campaign Category
             uint256, //Campaign Goal
             uint256, //Campaign deadline
             uint256 //Starting Fund

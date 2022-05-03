@@ -5,6 +5,10 @@ import Campaign from "../ethereum/campaign";
 import moment from "moment";
 import { Router } from "../routes";
 import { requestStatus } from "../constants/request-status";
+import {
+  NotificationContainer,
+  NotificationManager,
+} from "react-notifications";
 
 class RequestRow extends Component {
   constructor(props) {
@@ -67,28 +71,31 @@ class RequestRow extends Component {
   };
 
   onClaimingReward = async () => {
-    this.setState({ onClaimingReward: true });
-    try {
-      this.campaign.methods.claimReward().send({
-        from: this.accounts[0],
-      });
-    } catch (err) {}
-    this.setState({ onClaimingReward: false });
-    Router.replaceRoute(`/campaigns/${this.props.address}/requests`);
+    // this.setState({ onClaimingReward: true });
+    // try {
+    // await this.campaign.methods.claimReward().send({
+    //   from: this.accounts[0],
+    // });
+    NotificationManager.info("$DECHA is coming soon!", "Coming Soon", 3000);
+    // } catch (err) {}
+    // this.setState({ onClaimingReward: false });
+    // Router.replaceRoute(`/campaigns/${this.props.address}/requests`);
   };
 
   render() {
     const { Row, Cell } = Table;
     const { id, request, campaignBalance } = this.props;
-    const readyToFinalize = request.approvalCount > request.totalVoteCount / 2;
+    // const readyToFinalize = request.approvalCount > request.totalVoteCount / 2;
     const value =
       request.value == 0
-        ? web3.utils.fromWei(campaignBalance, "ether")
+        ? web3.utils.fromWei(campaignBalance / 4, "ether")
         : web3.utils.fromWei(request.value, "ether");
     return (
       <Row
-        disabled={request.completed}
-        positive={readyToFinalize && !request.completed}
+        // disabled={request.completed}
+        // positive={readyToFinalize && !request.completed}
+        positive={requestStatus[request.status] === "Approved"}
+        negative={requestStatus[request.status] === "Rejected"}
       >
         <Cell>{id}</Cell>
         <Cell>{request.description}</Cell>
@@ -153,7 +160,7 @@ class RequestRow extends Component {
               Claim
             </Button>
           ) : (
-            <Button color="blue" basic disabled>
+            <Button color="blue" basic>
               N/A
             </Button>
           )}
