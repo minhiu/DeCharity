@@ -29,19 +29,20 @@ class NewCampaign extends Component {
         throw new Error("Category must be filled");
       }
 
-      // const accounts = await web3.eth.getAccounts();
-      // const address = await factory.methods
-      //   .createCampaign(
-      //     this.state.name,
-      //     this.state.description,
-      //     this.state.category,
-      //     this.state.minimumContribution,
-      //     this.state.goal
-      //   )
-      //   .send({ from: accounts[0] });
-
-      // Router.pushRoute("/");
-      console.log(this.state);
+      const accounts = await web3.eth.getAccounts();
+      await factory.methods
+        .createCampaign(
+          web3.utils.toWei(this.state.minimumContribution, 'ether'),
+          this.state.name,
+          this.state.description,
+          this.state.category,
+          web3.utils.toWei(this.state.goal, 'ether'),
+        )
+        .send({ from: accounts[0] });
+        
+      const campaigns = await factory.methods.getDeployedCampaigns().call();
+      const campaign = campaigns[campaigns.length - 1];
+      Router.pushRoute(`/campaigns/${campaign}`);
     } catch (err) {
       this.setState({ errorMessage: err.message });
     }
@@ -108,6 +109,7 @@ class NewCampaign extends Component {
                   <Input
                     label="ETH"
                     labelPosition="right"
+                    placeholder="Minimum Contribution for donors to become validators"
                     value={this.state.minimumContribution}
                     onChange={(event) =>
                       this.setState({ minimumContribution: event.target.value })
@@ -119,6 +121,7 @@ class NewCampaign extends Component {
                   <Input
                     label="ETH"
                     labelPosition="right"
+                    placeholder="Goal of total funds needed"
                     value={this.state.goal}
                     onChange={(event) =>
                       this.setState({ goal: event.target.value })

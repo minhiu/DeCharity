@@ -34,16 +34,18 @@ class NewRequest extends Component {
 
     const campaign = Campaign(this.props.address);
 
-    // try {
-    //   const accounts = await web3.eth.getAccounts();
-    //   await campaign.methods
-    //     .createRequest(description, web3.utils.toWei(value, "ether"), recipient)
-    //     .send({ from: accounts[0] });
+    try {
+      const descriptions = [this.state.descriptionOne, this.state.descriptionTwo, this.state.descriptionThree, this.state.descriptionFour];
+      const recipients = [this.state.recipientOne, this.state.recipientTwo, this.state.recipientThree, this.state.recipientFour];
+      const accounts = await web3.eth.getAccounts();
+      await campaign.methods
+        .createRequests(descriptions, recipients)
+        .send({ from: accounts[0] });
 
-    //   Router.pushRoute(`/campaigns/${this.props.address}/requests`);
-    // } catch (err) {
-    //   this.setState({ errorMessage: err.message });
-    // }
+      Router.pushRoute(`/campaigns/${this.props.address}/requests`);
+    } catch (err) {
+      this.setState({ errorMessage: err.message });
+    }
 
     this.setState({
       descriptionOne: "",
@@ -81,7 +83,7 @@ class NewRequest extends Component {
             </div>
             <Form onSubmit={this.onSubmit} error={!!this.state.errorMessage}>
               <h3>Request 1</h3>
-              <Form.Group className="mb-5">
+              <Form.Group className="mb-3">
                 <Form.Input
                   required
                   fluid
@@ -107,7 +109,7 @@ class NewRequest extends Component {
               </Form.Group>
 
               <h3>Request 2</h3>
-              <Form.Group className="mb-5">
+              <Form.Group className="mb-3">
                 <Form.Input
                   required
                   fluid
@@ -133,7 +135,7 @@ class NewRequest extends Component {
               </Form.Group>
 
               <h3>Request 3</h3>
-              <Form.Group className="mb-5">
+              <Form.Group className="mb-3">
                 <Form.Input
                   required
                   fluid
@@ -159,7 +161,7 @@ class NewRequest extends Component {
               </Form.Group>
 
               <h3>Request 4</h3>
-              <Form.Group className="mb-5">
+              <Form.Group className="mb-3">
                 <Form.Input
                   required
                   width={9}

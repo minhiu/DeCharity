@@ -38,6 +38,10 @@ th {
   background-color: #a8d8ea !important;
 }
 
+tr {
+  background-color: #E8F9FD !important;
+}
+
 td {
   vertical-align: middle;
 }
@@ -57,6 +61,16 @@ td {
   min-height: calc(100vh - 50px);
   padding-top: 50px;
   background-color: $main-bg-color;
+}
+
+.progress-bar-wrapper {
+  .progress {
+    margin-bottom: 1rem !important;
+  }
+
+  p {
+    font-size: 1.5rem !important;
+  }
 }
 
 // Back button
@@ -82,6 +96,10 @@ td {
 
 .mb-10 {
   margin-bottom: 6rem;
+}
+
+.padding-inline-1rem {
+  padding: 0 1rem;
 }
 
 .fade-in {
@@ -216,7 +234,8 @@ td {
   background-color: #398ab9;
 
   .wrapper {
-    width: 100%;
+    width: min(100% - 5rem);
+    margin-inline: auto;
   }
 
   h1 {
@@ -402,9 +421,11 @@ td {
     &__title {
       padding: 1rem;
       font-size: 1.5rem !important;
+      font-weight: 700;
     }
 
     &__description {
+      word-break: break-all;
       padding: 0 1rem;
       font-size: 1.5rem !important;
     }
@@ -442,9 +463,16 @@ td {
     width: min(100% - 20rem);
     margin-inline: auto;
 
+    h4 {
+      word-wrap: break-word;
+    }
     .campaign-info {
-      display: grid;
-      grid-template-columns: 3fr 2fr;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      .cards {
+        justify-content: center;
+      }
     }
   }
 }
@@ -473,7 +501,7 @@ td {
 .dropdown-filter {
   width: 50% !important;
   margin-inline: auto;
-  
+
   a {
     text-decoration: none;
   }
@@ -490,18 +518,27 @@ td {
 /** RESPONSIVE MOBILE */
 @media only screen and (max-width: 910px) {
   .nav {
-    li:nth-of-type(n+2):nth-of-type(-n+5) {
+    li:nth-of-type(n + 2):nth-of-type(-n + 5) {
       display: none;
       visibility: hidden;
     }
   }
+
+  .back-btn {
+    display: none !important;
+    visibility: hidden !important;
+  }
+
+  .wrapper {
+    width: min(100% - 5rem) !important;
+  }
 }
 
-@media only screen and (max-width: 450px ) {
+@media only screen and (max-width: 450px) {
   .nav {
     .nav-link {
-    padding-left: 15px !important;
-    padding-right: 15px !important;
+      padding-left: 15px !important;
+      padding-right: 15px !important;
     }
   }
 }

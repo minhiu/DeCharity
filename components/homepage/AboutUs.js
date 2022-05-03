@@ -3,7 +3,7 @@ import React from "react";
 const AboutUs = () => {
 return (
     <div id="about">
-      <div className="col-xl-8 col-lg-8 col-md-8 m-auto text-center pt-10 pb-10">
+      <div className="col-xl-8 col-lg-8 col-md-8 m-auto text-center pt-10 pb-10 wrapper">
         <h2 className="mb-5">About Us</h2>
         <p>
           Founded in 2021, DeCharity was created to be a voice for people.

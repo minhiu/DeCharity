@@ -46,10 +46,13 @@ class Profile extends Component {
           .balances(this.state.account)
           .call();
         const donationValueEther = parseFloat(
-          web3.utils.fromWei(donationValueWei)
+          web3.utils.fromWei(donationValueWei, 'ether')
         );
         totalDonated += donationValueEther;
-
+        
+        const summary = await campaign.methods.getSummary().call();
+        donatedCampaign.balance = summary[1];
+        donatedCampaign.goal = summary[9];
         donatedCampaign.address = address;
         donatedCampaign.value = donationValueEther;
         donatedCampaigns.push(donatedCampaign);
@@ -71,6 +74,8 @@ class Profile extends Component {
           address={item.address}
           valueDonated={item.value}
           key={index}
+          balance={item.balance}
+          goal={item.goal}
         />
       );
     });

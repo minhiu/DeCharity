@@ -10,9 +10,12 @@
 <p>1. Install MetaMask Wallet browser extension - https://metamask.io/</p>
 <p>2. Update to the latest npm version - npm install -g npm</p>
 <p>3. Update to the latest node version - npm install --latest</p>
-<p>4. Install all the dependencies - npm install --legacy-peer-deps</p>
-<p>5. [SKIP FOR NOW] Set up an Infura Rinkeby Testnet faucet, and replace it inside ethereum/contracts/deploy.js</p>
-<p>6. [SKIP FOR NOW] Contract address is currently stored at "ADDRESS.txt", replace your own address here</p>
+<p>4. Make sure solc version is the same as solidiy contract version in package.json</p>
+<p>5. Compile contract using node ethereum/compile.js</p>
+<p>6. Deploy contract using node version older than 17 (16 or below)</p>
+<p>7. [SKIP FOR NOW] Set up an Infura Rinkeby Testnet faucet, and replace it inside ethereum/contracts/deploy.js</p>
+<p>8. Contract address is currently stored at "ADDRESS.txt", replace your own address here</p>
+
 
 <h4>Token Contract</h4>
 <p>1. Install brownie to compile, test, and deploy ERC tokens - pip install brownie</p>

@@ -8,6 +8,7 @@ import Image from "next/image";
 import Footer from "../components/Footer";
 import { Pagination } from "semantic-ui-react";
 import DropdownFilter from "../components/DropdownFilter";
+import Campaign from "../ethereum/campaign";
 
 const Campaigns = (props) => {
   const [activePage, setActivePage] = useState(1);
@@ -22,14 +23,19 @@ const Campaigns = (props) => {
       start: (activePage - 1) * itemsPerPage,
       end: activePage * itemsPerPage - 1,
     };
-    return props.campaigns.map((item, index) => {
+    return props.campaignsSummary.map((item, index) => {
       if (indexShowing.start <= index && index <= indexShowing.end) {
         return (
           <Card
             img="/images/background-campaign.jpg"
-            address={item}
-            description={"hello"}
+            title={item[6]}
+            manager={item[5]}
+            category={item[8]}
+            deadline={item[10]}
             key={index}
+            balance={item[1]}
+            goal={item[9]}
+            address={item.address}
           />
         );
       }
@@ -58,15 +64,16 @@ const Campaigns = (props) => {
             <DropdownFilter onFilterChange={onFilterChange} />
           </div>
           <div className="wrapper">{renderCampaigns()}</div>
-          <div className="text-center mt-5">
-            {props.campaignsLength > itemsPerPage ? (
+
+          {props.campaignsLength > itemsPerPage ? (
+            <div className="text-center mt-5">
               <Pagination
                 defaultActivePage={1}
                 totalPages={Math.ceil(props.campaignsLength / itemsPerPage)}
                 onPageChange={(event, data) => setActivePage(data.activePage)}
               />
-            ) : null}
-          </div>
+            </div>
+          ) : null}
         </div>
       </div>
       <Footer backgroundColor={"#cff1ef"} />
@@ -77,7 +84,14 @@ const Campaigns = (props) => {
 Campaigns.getInitialProps = async () => {
   const campaigns = await factory.methods.getDeployedCampaigns().call();
   const campaignsLength = campaigns.length;
-  return { campaigns, campaignsLength };
+  const campaignsSummary = [];
+  for (let i = 0; i < campaignsLength; i++) {
+    const campaign = await Campaign(campaigns[i]);
+    const campaignSummary = await campaign.methods.getSummary().call();
+    campaignSummary.address = campaigns[i];
+    campaignsSummary.push(campaignSummary)
+  }
+  return { campaigns, campaignsLength, campaignsSummary };
 };
 
 export default Campaigns;

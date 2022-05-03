@@ -121,12 +121,12 @@ contract Campaign {
         campaignName = name;
         campaignDescription = description;
         campaignCategory = stringToCategory(stringCategory);
-        manager = creator;
         minimumContribution = minimum;
-        _token = token;
+        fundingGoal = fundGoal;
         contributorsCount = 0;
         approversCount = 0;
-        fundingGoal = fundGoal;
+        _token = token;
+        manager = creator;
         deadline = block.timestamp + 45 days;
         startingFunds = 0;
     }
@@ -183,6 +183,7 @@ contract Campaign {
 
     /** Function to let users contribute (no minimum) */
     function contribute() public payable {
+        require(!requests[0].completed);
         require(requests.length == 4);
         // Count number of contributors (distinctively)
         if (!contributors[msg.sender]) {
@@ -306,6 +307,7 @@ contract Campaign {
 
         uint votingPhase = getNextVotingPhase();
         require(votingPhase == index+1);
+        requests[votingPhase].status = "validating";
 
         require(!request.completed);
         if (request.approvalCount > (request.totalVoteCount / 2)) {
@@ -348,24 +350,6 @@ contract Campaign {
         emit Transaction(msg.sender);
     }
 
-    // With a bunch of other book keeping elsewhere in the code this function will return the status of a phase correctly.
-    // A request status is just it's status unless the current date is within 15 days of the request's expiration date.
-    // And if the request has not yet been finalized.
-    function getPhaseStatus(uint256 index) public view returns (string memory) {
-        Request storage request = requests[index];
-        require(requests.length > index);
-        uint256 phase = getNextVotingPhase();
-        
-        // We check if the phase we are checking is the next phase to be voted.
-        if (
-            phase - 1 == index
-        ) {
-            return "validating";
-        }
-        //Otherwise it is just the request's status.
-        return request.status;
-    }
-
     /** Get basic, unbiased information of the campaign */
     function getSummary()
         public
@@ -381,7 +365,8 @@ contract Campaign {
             string memory, //Campaign Description
             string memory, //Campaign Status
             uint256, //Campaign Goal
-            uint256 //Campaign deadline
+            uint256, //Campaign deadline
+            uint256 //Starting Fund
         )
     {
         return (
@@ -395,7 +380,8 @@ contract Campaign {
             campaignDescription,
             getCategory(),
             fundingGoal,
-            deadline
+            deadline,
+            startingFunds
         );
     }
 

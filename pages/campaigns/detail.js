@@ -7,20 +7,26 @@ import { Router, Link } from "../../routes";
 import Header from "../../components/Header";
 import Image from "next/image";
 import Footer from "../../components/Footer";
+import ProgressBar from "../../components/ProgressBar";
 
 class CampaignShow extends Component {
   static async getInitialProps(props) {
     const address = props.query.address;
-    const campaign = Campaign(address);
+    const campaign = await Campaign(address);
     const summary = await campaign.methods.getSummary().call();
     return {
       address: address,
       minimumContribution: summary[0],
-      balance: summary[1],
+      balance: web3.utils.fromWei(summary[1], 'ether'),
       requestsCount: summary[2],
       contributorsCount: summary[3],
       approversCount: summary[4],
       manager: summary[5],
+      name: summary[6],
+      description: summary[7],
+      category: summary[8][0].toUpperCase() + summary[8].substr(1),
+      goal: web3.utils.fromWei(summary[9], 'ether'),
+      deadline: new Date(summary[10] * 1000).toLocaleDateString(),
     };
   }
 
@@ -45,20 +51,49 @@ class CampaignShow extends Component {
       contributorsCount,
       approversCount,
       manager,
+      name,
+      description,
+      category,
+      goal,
+      deadline,
     } = this.props;
 
     const items = [
       {
-        header: manager,
+        header: manager.substring(0, 5) + "..." + manager.slice(manager.length - 4),
         meta: "Address of Manager",
         description:
           "The manager created this campaign and can create requests to withdraw money.",
         style: { overflowWrap: "break-word" },
       },
       {
+        header: name,
+        meta: "Campaign Name",
+        description: "Action without a name, a who attached to it, is meaningless.",
+        style: { overflowWrap: "break-word" },
+      },
+      {
         header: web3.utils.fromWei(minimumContribution, "ether"),
         meta: "Minimum Contribution (ether)",
         description: "Minimum amount of donation in wei to become an approver.",
+        style: { overflowWrap: "break-word" },
+      },
+      {
+        header: description,
+        meta: "Campaign Description",
+        description: "Brief description of how the manager plans to use the donation.",
+        style: { overflowWrap: "break-word" },
+      },
+      {
+        header: category,
+        meta: "Campaign Category",
+        description: "Category of the campaign",
+        style: { overflowWrap: "break-word" },
+      },
+      {
+        header: deadline,
+        meta: "Campaign Deadline",
+        description: "If the goal is not met by the deadline, all funds will be refunded to all donors.",
         style: { overflowWrap: "break-word" },
       },
       {
@@ -83,12 +118,18 @@ class CampaignShow extends Component {
         style: { overflowWrap: "break-word" },
       },
       {
-        header: web3.utils.fromWei(balance, "ether"),
+        header: balance,
         meta: "Campaign Balance (ether)",
         description:
           "The balance is how much money this campaign has left to spend.",
         style: { overflowWrap: "break-word" },
       },
+      {
+        header: goal,
+        meta: "Campaign Goal",
+        description: "How much total fund does this campaign require to have",
+        style: { overflowWrap: "break-word" },
+      }
     ];
     return <Card.Group items={items} />;
   }
@@ -133,6 +174,12 @@ class CampaignShow extends Component {
                   </Button>
                 </Grid.Column>
               </Grid.Row>
+              <div className="progress-bar-wrapper mt-5">
+                <ProgressBar balance={this.props.balance} goal={this.props.goal} />
+              </div>
+              <div className="contribute mt-5">
+                <ContributeForm address={this.props.address} />
+              </div>
               <div
                 className="ui vertical animated button back-btn"
                 tabIndex="0"
@@ -146,10 +193,6 @@ class CampaignShow extends Component {
             </div>
             <div className="campaign-info">
               <div className="cards-wrapper">{this.renderCards()}</div>
-
-              <div className="contribute">
-                <ContributeForm address={this.props.address} />
-              </div>
             </div>
           </div>
         </div>
