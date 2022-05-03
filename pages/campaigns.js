@@ -1,4 +1,4 @@
-import React, { Component, useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Button } from "semantic-ui-react";
 import { Link } from "../routes";
 import Header from "../components/Header";
@@ -23,19 +23,26 @@ const Campaigns = (props) => {
       start: (activePage - 1) * itemsPerPage,
       end: activePage * itemsPerPage - 1,
     };
-    return props.campaignsSummary.map((item, index) => {
+
+    const filteredCampaigns = props.campaignsSummary.filter(
+      (item) => !filterData.length || filterData.includes(item[8])
+    );
+
+    return filteredCampaigns.map((item, index) => {
       if (indexShowing.start <= index && index <= indexShowing.end) {
         return (
           <Card
             img="/images/background-campaign.jpg"
+            balance={item[1]}
             title={item[6]}
             manager={item[5]}
             category={item[8]}
-            deadline={item[10]}
-            key={index}
-            balance={item[1]}
             goal={item[9]}
+            deadline={item[10]}
+            startingFund={item[11]}
+            key={index}
             address={item.address}
+            isRejected={item.isRejected}
           />
         );
       }
@@ -58,10 +65,12 @@ const Campaigns = (props) => {
             <h2>Campaigns</h2>
             <div className="mt-5 mb-5">
               <Link route="/campaigns/new">
-                <Button content="Create Campaign" icon="add circle" primary />
+                <Button content="Create a Campaign" icon="add circle" primary />
               </Link>
             </div>
-            <DropdownFilter onFilterChange={onFilterChange} />
+            {props.campaignsLength > 0 ? (
+              <DropdownFilter onFilterChange={onFilterChange} />
+            ) : null}
           </div>
           <div className="wrapper">{renderCampaigns()}</div>
 
@@ -89,7 +98,9 @@ Campaigns.getInitialProps = async () => {
     const campaign = await Campaign(campaigns[i]);
     const campaignSummary = await campaign.methods.getSummary().call();
     campaignSummary.address = campaigns[i];
-    campaignsSummary.push(campaignSummary)
+    const isRejected = await campaign.methods.isRejected().call();
+    campaignSummary.isRejected = isRejected;
+    campaignsSummary.push(campaignSummary);
   }
   return { campaigns, campaignsLength, campaignsSummary };
 };

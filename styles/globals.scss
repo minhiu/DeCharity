@@ -73,6 +73,12 @@ td {
   }
 }
 
+.rejected {
+  text-decoration: line-through;
+  text-decoration-color: #EE5007;
+  text-decoration-thickness: 3px;
+}
+
 // Back button
 .back-btn {
   background-color: $main-h-color !important;
@@ -414,7 +420,15 @@ td {
     cursor: pointer;
     transition: transform 200ms ease-in;
 
-    &__image {
+    .card__rejected {
+      position: absolute;
+      width: 100%;
+      text-align: center;
+      background-color: #EE5007;
+      color: #fff;
+    }
+
+    .card__image {
       width: 100%;
     }
 

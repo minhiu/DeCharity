@@ -15,16 +15,15 @@ class RequestIndex extends Component {
     const campaign = await Campaign(address);
     const summary = await campaign.methods.getSummary().call();
     const campaignBalance = summary[1];
-    const requestsCount = summary[2];
+    const requestsCount = parseInt(summary[2]);
     const requests = await Promise.all(
-      Array(parseInt(requestsCount))
+      Array(requestsCount)
         .fill()
         .map((elem, index) => {
           return campaign.methods.requests(index).call();
         })
     );
-    const isRejected =
-      requestsCount > 0 ? requests[3].status === "rejected" : false;
+    const isRejected = await campaign.methods.isRejected().call();
 
     return {
       address,
@@ -79,23 +78,26 @@ class RequestIndex extends Component {
               <Image src="/images/logo.png" height={100} width={100} />
               <h2>Requests</h2>
               {this.props.requestsCount === 0 ? (
-                <Link route={`/campaigns/${this.props.address}/requests/new`}>
-                  <a>
-                    <Button primary className="mt-5">
-                      Add Requests
-                    </Button>
-                  </a>
-                </Link>
+                <div className="mt-5 mb-5">
+                  <Link route={`/campaigns/${this.props.address}/requests/new`}>
+                    <a>
+                      <Button primary className="mt-5">
+                        Add Requests
+                      </Button>
+                    </a>
+                  </Link>
+                </div>
               ) : null}
               {this.props.isRejected ? (
-                <Button
-                  color="blue"
-                  basic
-                  onClick={this.onIssueRefund}
-                  loading={this.state.loadingRefund}
-                >
-                  Get Refund
-                </Button>
+                <div className="mt-5">
+                  <Button
+                    primary
+                    onClick={this.onIssueRefund}
+                    loading={this.state.loadingRefund}
+                  >
+                    Get Refund
+                  </Button>
+                </div>
               ) : null}
               <div
                 className="ui vertical animated button back-btn"
