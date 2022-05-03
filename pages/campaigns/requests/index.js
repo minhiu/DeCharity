@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Image from "next/image";
+import web3 from "../../../ethereum/web3";
 import { Link } from "../../../routes";
 import { Button, Table } from "semantic-ui-react";
 import Campaign from "../../../ethereum/campaign";
@@ -30,7 +31,6 @@ class RequestIndex extends Component {
       requests,
       requestsCount,
       campaignBalance,
-      campaign,
       isRejected,
     };
   }
@@ -56,7 +56,11 @@ class RequestIndex extends Component {
   onIssueRefund = async () => {
     this.setState({ loadingRefund: true });
     try {
-      await this.props.campaign.methods.issueRefund().call();
+      const campaign = await Campaign(this.props.address);
+      const accounts = await web3.eth.getAccounts();
+      await campaign.methods.issueRefund().send({
+        from: accounts[0],
+      });
     } catch (err) {
       console.log(err);
     }
