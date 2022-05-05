@@ -3,11 +3,13 @@ import Campaign from "../../ethereum/campaign";
 import { Card, Grid, Button } from "semantic-ui-react";
 import web3 from "../../ethereum/web3";
 import ContributeForm from "../../components/ContributeForm";
+import NameForm from "../../components/NameForm";
 import { Router, Link } from "../../routes";
 import Header from "../../components/Header";
 import Image from "next/image";
 import Footer from "../../components/Footer";
 import ProgressBar from "../../components/ProgressBar";
+import DescriptionForm from "../../components/DescriptionForm";
 
 class CampaignShow extends Component {
   static async getInitialProps(props) {
@@ -36,10 +38,16 @@ class CampaignShow extends Component {
   constructor(props) {
     super();
     this.campaign = Campaign(props.address);
+    this.state.isVisible = false;
   }
 
   async componentDidMount() {
     this.accounts = await web3.eth.getAccounts();
+    const {
+      manager
+    } = this.props;
+    this.setState({ isVisible: manager === this.accounts[0] }, () => {{}});
+
   }
 
   state = {
@@ -216,6 +224,12 @@ class CampaignShow extends Component {
             </div>
             <div className="campaign-info">
               <div className="cards-wrapper">{this.renderCards()}</div>
+            </div>
+            <div className="nameform mt-5">
+              <NameForm address={this.props.address} visible={this.state.isVisible} />
+            </div>
+            <div className="descriptionform mt-5">
+              <DescriptionForm address={this.props.address} visible={this.state.isVisible} />
             </div>
           </div>
         </div>
